@@ -7,7 +7,7 @@ authors:
   - name: Georgios Is. Detorakis
     affiliation: 1
 affiliations:
- - name: Bessel Technologies LLC
+ - name: Independent Researcher
    index: 1
 date: 15 August 2022
 bibliography: paper.bib
