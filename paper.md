@@ -24,7 +24,7 @@ Elena is a Flask-based Python library for building chatbot-based education trivi
 Gamification is becoming increasingly popular in education. Although the impact of gamification on long-term student outcomes is unclear, the goal is to increase students' motivation, which may improve these outcomes [@faiella; @dicheva]. One of the primary challenges plaguing the field is the need to understand how to design a game to improve particular learning outcomes.
 Performing such experiments is very difficult due to the difficulty of designing games. Designing multiple games and gauging how each one impacts the player's outcomes of interest are even more challenging. Thus, there is a need for a framework that enables one to develop and modify educational games rapidly.
 
-We know of no actively-maintained game engine for accomplishing this task. We developed one called 'Elena'. Elena is used to design trivia games that run in a web browser. The trivia game follows a chatbot-based game loop. However, the game engine is extensible in that a user can easily add additional functionality, *i.e.*, minigames within the chat loop, with a basic understanding of Python/JavaScript.
+We know of no actively-maintained game engine for accomplishing this task. We developed one called 'Elena'. Elena is used to design trivia games that run in a web browser. The trivia game follows a chatbot-based game loop. However, the game engine is extensible in that a user can easily add additional functionality, such as minigames within the chat loop, with a basic understanding of Python/JavaScript.
 
 
 # Story and experience of use
