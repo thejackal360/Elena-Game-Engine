@@ -1,0 +1,37 @@
+<div style="text-align: center;"><u>Temperature Controller Lab: Part I</u></div>
+</br>
+</br>
+Description: Construct a basic temperature controller using thermoelectric coolers (TECs) and a power supply.
+</br>
+</br>
+Materials:
+</br>
+<ul style="list-style-type: square;">
+<li>800W ATX power supply (1): Despite the much lower total power consumption of the TECs, we’ll want a lot of headroom for the initial inrush current surge.</li>
+<li>TEC1-12706 (2): These are standard thermoelectric coolers. We’ll stack them on top of each other for a higher hotplate temperature at a lower voltage.</li>
+<li>Aluminum sheet (1)</li>
+<li>Hacksaw (1)</li>
+<li>Silicone adhesive paste</li>
+<li><a href="https://www.amazon.com/HiLetgo-Channel-Isolation-Support-Trigger/dp/B00LW15D1M/ref=pd_rhf_ee_s_rp_c_sccl_1_6/131-3088748-0435240?pd_rd_w=5G0o2&pf_rd_p=c40cc3f9-a100-4914-8c06-0d36763c1da7&pf_rd_r=34SPMREF6HNJPKWZGDXD&pd_rd_r=d6a69f5d-4bf9-4b81-9d53-5740b4ed1cb2&pd_rd_wg=WVd64&pd_rd_i=B00LW15D1M&psc=1">Relay module</a></li>
+<li>Raspberry Pi 3</li>
+<li>SD card</li>
+<li>Jumper cables F2M</li>
+<li>Thick gauge wire</li>
+<li>Wire strippers/wire cutters</li>
+<li><a href="https://www.amazon.com/GeeekPi-Breakout-Adapter-Terminal-Computer/dp/B08MC389FQ/ref=pd_rhf_ee_s_rp_c_sccl_2_7/131-3088748-0435240?pd_rd_w=DTthY&pf_rd_p=c40cc3f9-a100-4914-8c06-0d36763c1da7&pf_rd_r=34RREE6PTK51KPFFCXQ1&pd_rd_r=4ba46602-4ab5-4863-87fd-95035c27bfcb&pd_rd_wg=PUw9B&pd_rd_i=B08MC389FQ&psc=1">ATX power adapter board</a></li>
+<li>Power cable for ATX supply to wall outlet</li>
+<li><a href="https://www.amazon.com/GAOHOU-DS18B20-Waterproof-Digital-Temperature/dp/B07YS9CKL6/ref=pd_rhf_ee_s_rp_c_sccl_1_1/131-3088748-0435240?pd_rd_w=5G0o2&pf_rd_p=c40cc3f9-a100-4914-8c06-0d36763c1da7&pf_rd_r=34SPMREF6HNJPKWZGDXD&pd_rd_r=d6a69f5d-4bf9-4b81-9d53-5740b4ed1cb2&pd_rd_wg=WVd64&pd_rd_i=B07YS9CKL6&psc=1">DS18B20 temperature sensor with adapter board</a></li>
+</ul>
+</br>
+Procedure:
+</br>
+<ol>
+<li>Cut one piece of wire. Connect it between the VCC terminal on the relay module and the +12V connection on the ATX adapter board. Do the same for ground on the ATX adapter and ground on the relay board. Do the same for NO (normally open) on the relay board and +12V on the ATX adapter board. Do the same for NC (normally closed) on the relay board and ground on the ATX adapter board.</li>
+<li>Connect a jumper wire between the 5V pin on the Raspberry Pi and the 5V terminal on the ATX adapter board. Do the same for ground on the Pi and ground on the adapter board. Connect a GPIO pin on the Pi to the IN pin on the relay board.</li>
+<li>Measure the dimensions of the TEC. Saw a piece of the aluminum sheet of the same size.</li>
+<li>Consider TEC1 and TEC2 (labeling each TEC with indices). Use silicone to connect the cold plate of TEC1 to the hot plate of TEC2. Then use silicone to connect the aluminum plate to the hot plate of TEC1. Use silicone to connect the DS18B20 sensor to the top of the plate. Place it toward the edge. Hold the “sandwich” together with a piece of duct tape and wait a few hours for the silicone to dry.</li>
+<li>Connect the ground wires on the TEC to the ground terminal on the ATX adapter board. Connect the red wires on the TEC to the COM pin on the relay board.</li>
+<li>Load Raspberry Pi OS on the SD card. Plug the Pi into a monitor via an HDMI cable. Place the SD card in the Pi’s SD slot, turn on the ATX power supply, and press the power button on the adapter board. Turn on the monitor.</li>
+<li>Write the PWM-based PID controller code to control the relay. See <a href="https://github.com/thejackal360/OpenPelt-Public/blob/master/OpenPelt/controller.py#L335-L345">here</a> for a sample of PID controller code. See <a href="https://github.com/wtucker/pi-pwm">here</a> for a sample PWM implementation.</li>
+<li>Tune the PID parameters accordingly.</li>
+</ol>

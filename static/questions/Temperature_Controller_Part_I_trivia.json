@@ -1,0 +1,15 @@
+{
+ "What is the typical semiconductor material used in thermoelectric coolers?"                                                  : "Bismuth telluride",
+ "What is kp in a PID controller called?"                                                                                      : "Proportional gain",
+ "What is ki in a PID controller called?"                                                                                      : "Integral gain",
+ "What is kd in a PID controller called?"                                                                                      : "Derivative gain",
+ "What does PID stand for?"                                                                                                    : "Proportional-integral-derivative",
+ "In the Peltier effect, a current driven through a thermoelectric cooler gives rise to a _____ difference between plates."    : "Temperature",
+ "In the Seebeck effect, a temperature difference applied to thermoelectric generator plates gives rise to a _____ difference between input wires." : "potential",
+ "What kinds of materials are used to make the plates on thermoelectric coolers?"                                              : "Ceramics",
+ "ATX stands for _________ Technology Extended."                                                                               : "Advanced",
+ "What is the color of the wire on an ATX power supply that needs to be shorted to ground to start the supply?"                : "Green",
+ "The output voltages on an ATX power supply are +12V, +5V, +3.3V, and -__V."                                                  : "12",
+ "PWM stands for _________ width modulation."                                                                                  : "Pulse",
+ "The control signal of an electromechanical relay is driven through a ____________."                                          : "Coil"
+}
