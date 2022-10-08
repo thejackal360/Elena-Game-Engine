@@ -50,7 +50,7 @@ The frontend is implemented using JavaScript/CSS/HTML and the jQuery library for
 
 The standard game loop code is implemented on the client-side using JavaScript/jQuery. However, most additional functionality is meant to be handled on the server side. Users define new packet types and map those to functions to be called when a packet of that type is received. This is done using the Python module code. The client-side JavaScript code includes functions for formatting and sending POST/GET requests with these custom header types. These custom request types are used to extend the functionality of the trivia game.
 
-The game loop is a simple chatbot conversation. The bot asks the user questions, and users are rewarded with points, or "kiwis," when they answer questions correctly. The game designer may add minigames in which the user can either (a) earn a number of kiwis that is often greater than answering a trivia question or (b) pay five kiwis to play the game.
+The game loop is a simple chatbot conversation. The bot asks the user questions, and users are rewarded with points, or "kiwis," when they answer questions correctly. The game designer may add minigames in which the user can either (a) earn kiwis or (b) pay five kiwis to play the game.
 
 
 # Sample Results
