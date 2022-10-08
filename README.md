@@ -141,3 +141,10 @@ For generating images with various styles we use an implementation of a
 in Pytorch. The copyrights for the fast-neural-style-pytorch implementation
 are retained by Rusty Mina. A full license note can be found in the `/static/ml/`
 directory. 
+
+## Bubble Design and Style Crediting
+
+We modified a publicly available floating bubble [design](https://codepen.io/kirstenallen/pen/MWwPYYm)
+that is used extensively throughout the game. We also borrowed a code [snippet](https://www.arungudelli.com/tutorial/css/disable-text-selection-in-html-using-user-select-css-property/#:~:text=To%20disable%20text%20selection%20highlighting%20in%20Google%20Chrome%20browser%20using,select%20CSS%20property%20to%20none.) for getting rid of text
+selecting in the back button. The original authors retain all rights for these snippets. If you suspect that you
+have a copyright claim to any portion of the design, feel free to contact us to cite or remove your code.
