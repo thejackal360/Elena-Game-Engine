@@ -16,7 +16,7 @@ nocite: '@*'
 
 # Summary
 
-Elena is a Flask-based Python library for building chatbot-based education trivia games. Users define lessons as modules by providing an HTML-based lab manual containing the background content. Any lab manual can be treated as a detailed activity description or as standard instructional material for a course. The user also provides a \*.json file listing all of the trivia questions for the module. The user may also write \*.js files to describe games that may be played within the chatbot. The Elena Python library is used to organize and extend the trivia game.
+Elena is a Flask-based Python library for building chatbot-based education trivia games. Users define lessons as modules by providing an HTML-based lab manual containing the background content. Any lab manual can be treated as a detailed activity description or as standard instructional material for a course. The user also provides a `*.json` file listing all of the trivia questions for the module. The user may also write `*.js` files to describe games that may be played within the chatbot. The Elena Python library is used to organize and extend the trivia game.
 
 
 # Statement of need
@@ -44,7 +44,7 @@ trivia questions, they believed it would work well for topics with simple respon
 # Architecture
 
 The engine contains two parts, the frontend, and the backend. The backend extends Python's Flask library [@grinberg2018flask]. Users define game modules using the Module class. The bare minimum
-requirement for developing a game is (a) the lab manual, or the description prior to the game, and (b) the \*.json file with the trivia questions. Optionally, users can add JavaScript code for a minigame module within the chat loop.
+requirement for developing a game is (a) the lab manual, or the description prior to the game, and (b) the `*.json` file with the trivia questions. Optionally, users can add JavaScript code for a minigame module within the chat loop.
 
 The frontend is implemented using JavaScript/CSS/HTML and the jQuery library for animations. The goal of the frontend design is to be compatible across multiple browsers. Elena is not currently intended to work on other platforms, like smartphones.
 
@@ -55,7 +55,7 @@ The game loop is a simple chatbot conversation. The bot asks the user questions,
 
 # Sample Results
 
-The repo contains an example implementation. *app.py* is an example of the Flask app file and can
+The repo contains an example implementation. `app.py` is an example of the Flask app file and can
 be found in the root directory. Within that file, the most important section of code is the object
 definitions. This is where the user organizes the trivia game's structure.
 
