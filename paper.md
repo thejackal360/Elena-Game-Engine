@@ -59,7 +59,7 @@ The repo contains an example implementation. `app.py` is an example of the Flask
 be found in the root directory. Within that file, the most important section of code is the object
 definitions. This is where the user organizes the trivia game's structure.
 
-```
+```python
 # Object Definitions
 
 # Create necessary objects for trivia game
@@ -76,7 +76,7 @@ app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME,
 ```
 
 Most requests will be routed through a root route:
-```
+```python
 @app.eroute('/', methods=['POST', 'GET'])
 def root(mod):
     """
@@ -99,7 +99,7 @@ points than from a typical trivia question. "ArtGen0" is a minigame in which the
 spend their earned points to play.
 
 Trivia questions are described using a JSON file of the following form:
-```
+```python
 {
  "Latin name for the bacterium that causes botulism?"  : "Clostridium botulinum",
  "Latin name for the bacterium that causes tetanus?"   : "Clostridium tetani",
@@ -110,7 +110,7 @@ Trivia questions are described using a JSON file of the following form:
 
 The starting lab manual is described using HTML markup:
 
-```
+```html
 <div style="text-align: center;"><u>Bacterial Culture</u></div>
 </br>
 </br>

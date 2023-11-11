@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
+from setuptools import setup
 
-setup(name = 'elena',
-      version = 'alpha',
-      description = 'elena Trivia Webapp Generator',
-      author = 'Roman Parise and Georgios Is. Detorakis',
-      packages = ['elena'],
-     )
+if __name__ == "__main__":
+    setup()

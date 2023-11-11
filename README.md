@@ -110,6 +110,52 @@ Any game files go in static/js/games. See static/js/games in this repo for examp
 
 The default domain is "elena-heroku.herokuapp.com". Please change the DOMAIN_NAME constant in app.py to fit your Heroku project's domain.
 
+## Community Guidelines
+
+### Respectful and Inclusive Environment
+
+- Treat everyone with respect. Be considerate, understanding, and inclusive of diverse perspectives, backgrounds, and experiences.
+- Avoid discriminatory language or behavior that may offend or exclude others.
+
+### Content Integrity and Appropriateness
+
+- Ensure that all content—lessons, questions, games, and discussions—adheres to community standards, maintaining accuracy and educational value.
+- Content should be appropriate for all age groups and respectful of cultural differences.
+
+### Intellectual Property and Attribution
+
+- Respect intellectual property rights. Do not plagiarize content or violate copyright laws.
+- Properly attribute sources, giving credit where it’s due.
+
+### Collaboration and Support
+
+- Encourage collaboration and constructive feedback. Help others, share knowledge, and support those seeking assistance.
+- Keep discussions and interactions positive and helpful.
+
+### Security and Privacy
+
+- Do not share personal or sensitive information. Respect user privacy and the confidentiality of information shared within the community.
+- Report any security concerns or vulnerabilities promptly.
+
+### Open Communication and Transparency
+
+- Engage in transparent and open communication. Discuss ideas, improvements, and issues in a constructive and clear manner.
+- Notify moderators or administrators about any problems, disputes, or rule violations.
+
+### Use of Elena Python Library and Resources
+
+- Utilize the Elena Python library responsibly, ensuring proper organization and extension of the trivia game.
+- Share knowledge and resources that could benefit the community while respecting the framework’s terms of use.
+
+### Reporting and Moderation
+
+- Report any violations or inappropriate behavior to moderators or administrators.
+- Respect decisions made by the moderators regarding disputes, warnings, or content removal.
+
+### Continuous Improvement
+
+- Strive for continuous improvement and innovation within the framework. Encourage learning, growth, and the evolution of the project.
+
 ## Platforms Tested
 
 The following are the browser/OS combinations on which the deployed Heroku site has been tested:
@@ -140,7 +186,10 @@ For generating images with various styles we use an implementation of a
 [fast-neural-style](https://github.com/rrmina/fast-neural-style-pytorch) algorithm
 in Pytorch. The copyrights for the fast-neural-style-pytorch implementation
 are retained by Rusty Mina. A full license note can be found in the `/static/ml/`
-directory. 
+directory.
+
+This image generation algorithm is not a core part of the Elena engine. It is
+included as part of an example game. See app.py for more details.
 
 ## Bubble Design and Style Crediting
 
