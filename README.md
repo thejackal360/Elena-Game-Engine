@@ -140,7 +140,10 @@ For generating images with various styles we use an implementation of a
 [fast-neural-style](https://github.com/rrmina/fast-neural-style-pytorch) algorithm
 in Pytorch. The copyrights for the fast-neural-style-pytorch implementation
 are retained by Rusty Mina. A full license note can be found in the `/static/ml/`
-directory. 
+directory.
+
+This image generation algorithm is not a core part of the Elena engine. It is
+included as part of an example game. See app.py for more details.
 
 ## Bubble Design and Style Crediting
 
