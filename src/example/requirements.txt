@@ -1,4 +1,4 @@
-torch==2.1.0
+torch
 torchvision
 torchaudio
 
@@ -6,4 +6,4 @@ matplotlib
 flask == 2.0.0
 gunicorn
 
-elena
+elena-game-engine
