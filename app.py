@@ -7,12 +7,10 @@ import random
 import json
 from pathlib import Path
 import numpy as np
-import sys
 import os
 import time
 from matplotlib import pyplot as plt
-from flask import abort, request, render_template, \
-                  Response, send_from_directory
+from flask import request, Response, send_from_directory
 from PIL import Image
 from static.ml.stylize import stylize
 from elena import eFlask, Module, Game
