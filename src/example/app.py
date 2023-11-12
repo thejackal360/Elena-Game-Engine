@@ -7,12 +7,10 @@ import random
 import json
 from pathlib import Path
 import numpy as np
-import sys
 import os
 import time
 from matplotlib import pyplot as plt
-from flask import abort, request, render_template, \
-                  Response, send_from_directory
+from flask import request, Response, send_from_directory
 from PIL import Image
 from static.ml.stylize import stylize
 from elena import eFlask, Module, Game
@@ -23,8 +21,8 @@ DOMAIN_NAME = "elena-heroku.herokuapp.com"
 NN_ART_MUTEX = False
 stylized_img_idx = 0
 
-# Function Definitions
 
+# Function Definitions
 def bonus():
     """
     Trivia bonus round. Users need to guess the material of interest
@@ -44,6 +42,7 @@ def bonus():
         "'", "").replace("[", "").replace("]", "")
     return Response(bonus_str, mimetype='application/json')
 
+
 def nn_Art_art_keyword():
     """
     For the ArtGen0 game, send 3 art-related keywords back to the user.
@@ -52,7 +51,7 @@ def nn_Art_art_keyword():
     art_pic_names = []
     # Need to keep track of number of iterations and kill runaway
     # requests to preserve cloud bandwidth.
-    styles_lst = ['lazy', 'mosaic', \
+    styles_lst = ['lazy', 'mosaic',
                   'wave', 'bayanihan', 'ghoul']
     count = 0
     max_count = 5
@@ -68,6 +67,7 @@ def nn_Art_art_keyword():
     art_pic_names = ','.join(art_pic_names)
     return Response(art_pic_names, mimetype='text/html')
 
+
 def nn_Art_bio_keyword():
     """
     For the ArtGen0 game, send 3 bio-related keywords back to the user.
@@ -81,8 +81,7 @@ def nn_Art_bio_keyword():
             return
         b = random.choice(
             [f for f in
-                os.popen("ls static/content_images/")\
-                  .read().split("\n")
+                os.popen("ls static/content_images/").read().split("\n")
                 if f not in bio_pic_names and f != ""])
         if b not in bio_pic_names:
             assert b != ""
@@ -90,6 +89,7 @@ def nn_Art_bio_keyword():
     bio_pic_names = [Path(b).stem for b in bio_pic_names]
     bio_pic_names = ','.join(bio_pic_names)
     return Response(bio_pic_names, mimetype='text/html')
+
 
 def art():
     """
@@ -103,19 +103,19 @@ def art():
         time.sleep(3)
     NN_ART_MUTEX = True
     post_body = json.loads(request.data)
-    c = "static/content_images/" + post_body["content_img"] + ".png"
-    s = "static/style_images/" + post_body["style_img"] + ".jpg"
+    c = Path("static/content_images/") + post_body["content_img"] + ".png"
+    # s = Path("static/style_images/") + post_body["style_img"] + ".jpg"
     content_img = load_img_cv(c)
     stylized_img = stylize(content_img, style=post_body['style_img'])
     # Required to run on Heroku. Heroku's filesystem frequently deletes
     # directories.
     os.system("mkdir -p static/gen_imgs/")
-    plt.imsave("static/gen_imgs/stylized_img" +
-               str(stylized_img_idx) + ".png", \
+    plt.imsave(Path("static/gen_imgs/stylized_img") +
+               str(stylized_img_idx) + ".png",
                np.squeeze(stylized_img))
     stylized_img_idx += 1
     NN_ART_MUTEX = False
-    return Response("static/gen_imgs/stylized_img"
+    return Response(Path("static/gen_imgs/stylized_img")
                     + str(stylized_img_idx - 1)
                     + ".png", mimetype="text/html")
 
@@ -136,14 +136,14 @@ def load_img_cv(img_path):
 
 # Create necessary objects for trivia game
 mymod0 = Module("Temperature Controller Part I", [])
-mymod1 = Module("Temperature Controller Part II", \
-                [Game("Experiment0", {}, {'bonus' : bonus}),
+mymod1 = Module("Temperature Controller Part II",
+                [Game("Experiment0", {}, {'bonus': bonus}),
                  Game("ArtGen0",
-                      {'art' : art},
-                      {'nn_art_bio_keyword' : nn_Art_bio_keyword,
-                       'nn_art_art_keyword' : nn_Art_art_keyword})])
+                      {'art': art},
+                      {'nn_art_bio_keyword': nn_Art_bio_keyword,
+                       'nn_art_art_keyword': nn_Art_art_keyword})])
 mymod2 = Module("Bacterial Culture", [])
-app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME, 
+app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME,
              import_name=__name__)
 
 # Load the bonus questions into a global bonus_qs variable
@@ -177,13 +177,13 @@ def gen_img(filename):
     return send_from_directory("static/gen_imgs/", filename)
 
 
-#@app.before_request
-#def firewall():
+# @app.before_request
+# def firewall():
     """
     Only tested for Heroku PaaS. Check the IP whitelist file
     allowed_ips_list and do nothing if we detect a blacklisted IP.
     """
-    #if "--local" not in sys.argv:
+    # if "--local" not in sys.argv:
     #    with open("allowed_ips_list", "r") as a:
     #        allowed_ips = a.read().split('\n')
     #        if request.headers['X-Forwarded-For'] not in allowed_ips:
