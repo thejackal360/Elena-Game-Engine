@@ -103,21 +103,21 @@ def art():
         time.sleep(3)
     NN_ART_MUTEX = True
     post_body = json.loads(request.data)
-    c = Path("static/content_images/") + post_body["content_img"] + ".png"
+    c = Path("static/content_images/") / post_body["content_img"] / ".png"
     # s = Path("static/style_images/") + post_body["style_img"] + ".jpg"
     content_img = load_img_cv(c)
     stylized_img = stylize(content_img, style=post_body['style_img'])
     # Required to run on Heroku. Heroku's filesystem frequently deletes
     # directories.
     os.system("mkdir -p static/gen_imgs/")
-    plt.imsave(Path("static/gen_imgs/stylized_img") +
-               str(stylized_img_idx) + ".png",
+    plt.imsave(Path("static/gen_imgs/stylized_img") /
+               str(stylized_img_idx) / ".png",
                np.squeeze(stylized_img))
     stylized_img_idx += 1
     NN_ART_MUTEX = False
     return Response(Path("static/gen_imgs/stylized_img")
-                    + str(stylized_img_idx - 1)
-                    + ".png", mimetype="text/html")
+                    / str(stylized_img_idx - 1)
+                    / ".png", mimetype="text/html")
 
 
 def load_img_cv(img_path):

@@ -79,7 +79,7 @@ class eFlask(Flask):
                              for m in self.module_list]
         self.trivia_qs = {}
         for m in self.module_list:
-            with open(Path("static/questions/")+"{}_trivia.json".format(
+            with open(Path("static/questions/") / "{}_trivia.json".format(
                       m.fn_module_name), "r") as t:
                 self.trivia_qs["{}_trivia".format(
                                m.fn_module_name)] = json.load(t)
@@ -178,7 +178,7 @@ class eFlask(Flask):
             return Response("[\"{}\",\"{}\"]".format(q, qdict[q]),
                             mimetype='text/html')
         elif request.headers.get('Internal-Type') in self.manual_ptype:
-            with open(Path("static/html/")+"{}.html".format(
+            with open(Path("static/html/") / "{}.html".format(
                       request.headers.get('Internal-Type')), "r") as f:
                 return Response(f.read(), mimetype="text/html")
         elif request.headers.get('Internal-Type') \
@@ -229,7 +229,7 @@ class Module:
         self.module_name = module_name
         self.fn_module_name = module_name.replace(" ", "_")
         self.game_list = game_list
-        self.elenajs = Path("static/js/games/")+"{}_elena.js".format(
+        self.elenajs = Path("static/js/games/") / "{}_elena.js".format(
                        self.module_name)
         self.gen_subjs()
         self.gen_jsglobals()
@@ -260,7 +260,7 @@ class Module:
         Generate a jsglobals file for the module. jsglobals file
         defines constants for use in selecting games.
         """
-        with open(Path("static/js/games/")+"{}_js_globals.js".format(
+        with open(Path("static/js/games/") / "{}_js_globals.js".format(
                 self.fn_module_name), "w") as f:
             f.write("const {}{}Topic = 0;\n".format(
                 self.fn_module_name, "Trivia"))
@@ -303,7 +303,7 @@ class Game:
         function dictionary (GET requests)
         """
         self.gname = gname
-        self.jsfile = Path("static/js/games/")+"{}.js".format(self.gname)
+        self.jsfile = Path("static/js/games/") / "{}.js".format(self.gname)
         self.http_post_ptype_to_fn = http_post_ptype_to_fn
         self.http_get_ptype_to_fn = http_get_ptype_to_fn
 
