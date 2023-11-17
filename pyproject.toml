@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+    "setuptools >= 40.0.4",
+    "setuptools_scm >= 2.0.0",
+    "wheel >= 0.29.0"
+    ]
+    build-backend="setuptools.build_meta"
+
+[project]
+name = "elena-game-engine"
+version = "0.0.1"
+authors = [
+  { name="Roman Parise"},
+  { name="Georgios Detorakis"}
+]
+description = "elena Trivia Webapp Generator"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    'matplotlib',
+    'flask==2.0.0',
+    'gunicorn'
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/thejackal360/Elena-Game-Engine"
+"Bug Tracker" = "https://github.com/thejackal360/Elena-Game-Engine/issues"

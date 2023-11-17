@@ -1,0 +1,9 @@
+torch
+torchvision
+torchaudio
+
+matplotlib
+flask == 2.0.0
+gunicorn
+
+elena-game-engine
