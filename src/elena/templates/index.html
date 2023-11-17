@@ -59,7 +59,9 @@
     <script src="static/js/elena_top.js"></script>
 
 {{ module_js_globals }}
-{{ gamejs }}
+{% for js_file in js_files %}
+    <script src="{{ js_file }}" type="application/javascript"></script>
+{% endfor %}
 {{ module_subjs }}
 {{ elenajs }}
     <script src="static/js/bootstrap.js" type="text/javascript"></script>
