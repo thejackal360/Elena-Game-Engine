@@ -144,21 +144,6 @@ class eFlask(Flask):
                     )
                 )
 
-    def gen_pick_mod(self):
-        """
-        Generate HTML markup for bubbles on the module select page,
-        one for each module.
-        @return: return markup
-        """
-        return "\n".join(
-            [
-                '\t\t<p class="modsel" '
-                + ' onclick="{}_start_lab()">{}'.format(m.fn_module_name, m.module_name)
-                + "</p></br></br>"
-                for m in self.module_list
-            ]
-        )
-
     def handle_requests(self):
         """
         Handle incoming HTTP request
@@ -202,27 +187,16 @@ class eFlask(Flask):
             js_files = list(
                 chain(*[[g.jsfile for g in m.game_list] for m in self.module_list])
             )
-            elenajs = Markup("\n".join([m.elenajs_script() for m in self.module_list]))
-            module_js_globals = Markup(
-                "\n".join(
-                    [
-                        '\t\t<script src="static/js/games/'
-                        + '{}_js_globals.js" '.format(m.fn_module_name)
-                        + 'type="application/javascript"></script>'
-                        for m in self.module_list
-                    ]
-                )
-            )
-            module_subjs = Markup(
-                "\n".join(
-                    [
-                        '\t\t<script src="static/js/games/'
-                        + '{}_subjs.js" '.format(m.fn_module_name)
-                        + 'type="application/javascript"></script>'
-                        for m in self.module_list
-                    ]
-                )
-            )
+            elenajs = list([m.elena_js for m in self.module_list])
+            module_js_globals = [
+                "static/js/games/{}_js_globals.js".format(m.fn_module_name)
+                for m in self.module_list
+            ]
+            module_subjs = [
+                "static/js/games/{}_subjs.js".format(m.fn_module_name)
+                for m in self.module_list
+            ]
+            pick_mod = {m.fn_module_name: m.module_name for m in self.module_list}
             return render_template(
                 "index.html",
                 domain=http + "://" + LOCALHOST + ":" + str(PORT) + "/"
@@ -232,7 +206,7 @@ class eFlask(Flask):
                 elenajs=elenajs,
                 module_js_globals=module_js_globals,
                 module_subjs=module_subjs,
-                pick_mod=Markup(self.gen_pick_mod()),
+                pick_mod=pick_mod,
             )
 
 
@@ -307,16 +281,6 @@ class Module:
                     self.fn_module_name, len(self.game_list) + 1
                 )
             )
-
-    def elenajs_script(self):
-        """
-        Generate HTML markup for importing this module's elena.js
-        file.
-        """
-        return (
-            '\t<script src="{}" '.format(self.elenajs)
-            + 'type="application/javascript"></script>'
-        )
 
 
 class Game:
