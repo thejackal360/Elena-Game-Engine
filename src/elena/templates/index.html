@@ -26,7 +26,7 @@
         </br>
         </br>
 {% for fn_module_name,module_name in pick_mod.items() %}
-        <p class="modsel" onclick="{fn_module_name}_start_lab()">{module_name}</p>
+        <p class="modsel" onclick="{{fn_module_name}}_start_lab()">{{module_name}}</p>
         </br>
         </br>
 {% endfor %}

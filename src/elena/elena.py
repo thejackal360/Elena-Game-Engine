@@ -2,7 +2,7 @@
 
 # Imports
 
-from flask import Flask, Markup, Response, request, render_template
+from flask import Flask, Response, request, render_template
 from functools import partial
 from itertools import chain
 from jinja2 import Environment, FileSystemLoader, Template
@@ -187,7 +187,7 @@ class eFlask(Flask):
             js_files = list(
                 chain(*[[g.jsfile for g in m.game_list] for m in self.module_list])
             )
-            elenajs = list([m.elena_js for m in self.module_list])
+            elenajs = list([m.elenajs for m in self.module_list])
             module_js_globals = [
                 "static/js/games/{}_js_globals.js".format(m.fn_module_name)
                 for m in self.module_list
