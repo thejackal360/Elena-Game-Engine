@@ -5,7 +5,7 @@
 from flask import Flask, Markup, Response, request, render_template
 from functools import partial
 from itertools import chain
-from jinja2 import Template
+from jinja2 import Environment, FileSystemLoader, Template
 from pathlib import Path
 import json
 import random
@@ -240,47 +240,26 @@ class Module:
         Generate a subjs file for the module. subjs file contains
         a function for selecting a game.
         """
-        with open("static/js/games/{}_subjs.js".format(self.fn_module_name), "w") as f:
-            f.write(
-                "function {}_subjs(topic, val) ".format(self.fn_module_name) + "{\n"
-            )
-            f.write("\tswitch (topic) {\n")
-            [
-                f.write(
-                    "\t\tcase {}{}Topic: {}(val); ".format(
-                        self.fn_module_name, g.gname, g.gname
-                    )
-                    + "break;\n"
-                )
-                for g in self.game_list
-            ]
-            f.write("\t\tdefault: /* do nothing */;\n")
-            f.write("\t}\n")
-            f.write("}")
+        env = Environment(loader=FileSystemLoader("."))
+        template = env.get_template("templates/subjs.js")
+        rendered_content = template.render(
+            fn_module_name=self.fn_module_name, game_list=self.game_list
+        )
+        with open(f"static/js/games/{self.fn_module_name}_subjs.js", "w") as f:
+            f.write(rendered_content)
 
     def gen_jsglobals(self):
         """
         Generate a jsglobals file for the module. jsglobals file
         defines constants for use in selecting games.
         """
-        with open(
-            Path("static/js/games/") / "{}_js_globals.js".format(self.fn_module_name),
-            "w",
-        ) as f:
-            f.write("const {}{}Topic = 0;\n".format(self.fn_module_name, "Trivia"))
-            [
-                f.write(
-                    "const {}{}Topic = {};\n".format(
-                        self.fn_module_name, v.gname, i + 1
-                    )
-                )
-                for i, v in enumerate(self.game_list)
-            ]
-            f.write(
-                "const {}NumTopics = {};".format(
-                    self.fn_module_name, len(self.game_list) + 1
-                )
-            )
+        env = Environment(loader=FileSystemLoader("."))
+        template = env.get_template("templates/jsglobals.js")
+        rendered_content = template.render(
+            fn_module_name=self.fn_module_name, game_list=self.game_list
+        )
+        with open(f"static/js/games/{self.fn_module_name}_js_globals.js", "w") as f:
+            f.write(rendered_content)
 
 
 class Game:
