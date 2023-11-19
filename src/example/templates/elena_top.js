@@ -19,8 +19,8 @@ var already_hit = false;
 var chelsea_msgs = ["Hi! I'm Chelsea. What's your name?"];
 var convo_counter = 0;
 
-const kiwi_cost_to_play_game = 5;
-const ask_for_game_every_N_rounds = 3;
+const kiwi_cost_to_play_game = {{ kiwi_cost_to_play_game }};
+const ask_for_game_every_N_rounds = {{ ask_for_game_every_N_rounds }};
 
 /**
 * Sometimes a user's response won't be in the form you expect.

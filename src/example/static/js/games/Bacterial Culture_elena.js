@@ -6,7 +6,8 @@
 * in generated *_globals.js file in static/js/games/
 */
 function Bacterial_Culture_acceptable_topic(_t) {
-    if (((kiwicount_var >= 5) && (rounds_since_last_game >= 3) &&
+    if (((kiwicount_var >= kiwi_cost_to_play_game) &&
+         (rounds_since_last_game >= ask_for_game_every_N_rounds) &&
          (_t != Bacterial_CultureTriviaTopic)) ||
          (_t == Bacterial_CultureTriviaTopic)) {
         return true;

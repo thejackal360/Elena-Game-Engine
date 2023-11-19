@@ -62,15 +62,26 @@ class eFlask(Flask):
     Class used to instantiate app objects.
     """
 
-    def __init__(self, module_list, domain, **kwargs):
+    def __init__(
+        self,
+        module_list,
+        domain,
+        kiwi_cost_to_play_game=5,
+        ask_for_game_every_N_rounds=3,
+        **kwargs,
+    ):
         """
         Initializer.
         @param module_list: list of module objects for trivia game
         @param domain: website's domain
+        @param kiwi_cost_to_play_game: how many kiwis does it cost to play a game? default value is 5
+        @param ask_for_game_every_N_rounds: minimum number of rounds between games; default value is 3
         """
         super().__init__(**kwargs)
         self.module_list = module_list
         self.domain = domain
+        self.kiwi_cost_to_play_game = kiwi_cost_to_play_game
+        self.ask_for_game_every_N_rounds = ask_for_game_every_N_rounds
         self.http_post_ptype_to_fn = dict_stitching(
             [m.http_post_ptype_to_fn for m in self.module_list]
         )
@@ -91,6 +102,7 @@ class eFlask(Flask):
             ) as t:
                 self.trivia_qs["{}_trivia".format(m.fn_module_name)] = json.load(t)
         self.gen_elenajs()
+        self.gen_elena_top_js()
 
     def eroute(self, rule: str, **options: t.Any) -> t.Callable[[F], F]:
         # https://github.com/pallets/flask/blob/main/src/flask/scaffold.py#L36
@@ -143,6 +155,20 @@ class eFlask(Flask):
                         module_name_in_quotes='"' + m.fn_module_name + '"',
                     )
                 )
+
+    def gen_elena_top_js(self):
+        """
+        Generate a subjs file for the module. subjs file contains
+        a function for selecting a game.
+        """
+        env = Environment(loader=FileSystemLoader("."))
+        template = env.get_template("templates/elena_top.js")
+        rendered_content = template.render(
+            kiwi_cost_to_play_game=self.kiwi_cost_to_play_game,
+            ask_for_game_every_N_rounds=self.ask_for_game_every_N_rounds,
+        )
+        with open("static/js/elena_top.js", "w") as f:
+            f.write(rendered_content)
 
     def handle_requests(self):
         """
@@ -243,7 +269,8 @@ class Module:
         env = Environment(loader=FileSystemLoader("."))
         template = env.get_template("templates/subjs.js")
         rendered_content = template.render(
-            fn_module_name=self.fn_module_name, game_list=self.game_list
+            fn_module_name=self.fn_module_name,
+            game_list=[g.gname for g in self.game_list],
         )
         with open(f"static/js/games/{self.fn_module_name}_subjs.js", "w") as f:
             f.write(rendered_content)
@@ -256,7 +283,8 @@ class Module:
         env = Environment(loader=FileSystemLoader("."))
         template = env.get_template("templates/jsglobals.js")
         rendered_content = template.render(
-            fn_module_name=self.fn_module_name, game_list=self.game_list
+            fn_module_name=self.fn_module_name,
+            game_list=[g.gname for g in self.game_list],
         )
         with open(f"static/js/games/{self.fn_module_name}_js_globals.js", "w") as f:
             f.write(rendered_content)
