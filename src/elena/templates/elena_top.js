@@ -19,6 +19,9 @@ var already_hit = false;
 var chelsea_msgs = ["Hi! I'm Chelsea. What's your name?"];
 var convo_counter = 0;
 
+const kiwi_cost_to_play_game = {{ kiwi_cost_to_play_game }};
+const ask_for_game_every_N_rounds = {{ ask_for_game_every_N_rounds }};
+
 /**
 * Sometimes a user's response won't be in the form you expect.
 * You need to have standard rules by which answers are to be
@@ -199,10 +202,10 @@ function start() {
 */
 
 /**
-* Pay 5 kiwis to play a game.
+* Pay kiwi_cost_to_play_game kiwis to play a game.
 */
 function pay_to_play() {
-    kiwicount_var -= 5;
+    kiwicount_var -= kiwi_cost_to_play_game;
     document.getElementById("kiwicount").innerHTML = kiwicount_var;
 }
 
