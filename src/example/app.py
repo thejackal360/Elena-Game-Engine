@@ -147,9 +147,8 @@ app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME,
              import_name=__name__)
 
 # Load the bonus questions into a global bonus_qs variable
-with open("./static/questions/bonus_round.csv", "r") as b:
-    bonus_qs = eval(b.read())
-
+bonus_round_json_handler = open("./static/questions/bonus_round.json")
+bonus_qs = json.load(bonus_round_json_handler)
 
 # Routes
 
