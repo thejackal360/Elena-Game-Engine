@@ -25,7 +25,11 @@
         <div id="selectmodtext">Hello there! Please select a lab module.</div>
         </br>
         </br>
-{{ pick_mod }}
+{% for fn_module_name,module_name in pick_mod.items() %}
+        <p class="modsel" onclick="{{fn_module_name}}_start_lab()">{{module_name}}</p>
+        </br>
+        </br>
+{% endfor %}
     </div>
 
     <div id="lab_manual">
@@ -58,10 +62,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@magenta/image@^0.2.1"></script>
     <script src="static/js/elena_top.js"></script>
 
-{{ module_js_globals }}
-{{ gamejs }}
-{{ module_subjs }}
-{{ elenajs }}
+{% for js_file in module_js_globals %}
+    <script src="{{ js_file }}" type="application/javascript"></script>
+{% endfor %}
+{% for js_file in js_files %}
+    <script src="{{ js_file }}" type="application/javascript"></script>
+{% endfor %}
+{% for js_file in module_subjs %}
+    <script src="{{ js_file }}" type="application/javascript"></script>
+{% endfor %}
+{% for js_file in elenajs %}
+    <script src="{{ js_file }}" type="application/javascript"></script>
+{% endfor %}
     <script src="static/js/bootstrap.js" type="text/javascript"></script>
 
   </body>
