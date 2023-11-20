@@ -72,7 +72,9 @@ html {
 /* https://codepen.io/kirstenallen/pen/MWwPYYm */
 .yourbubble {
     transform: translatey(0px);
+    {% if bouncing_text %}
     animation: float 5s ease-in-out infinite;
+    {% endif %}
     mix-blend-mode: multiply;
     text-align: left;
     text-transform: uppercase;
@@ -95,7 +97,9 @@ html {
 
 .chelseabubble {
     transform: translatey(0px);
+    {% if bouncing_text %}
     animation: float 5s ease-in-out infinite;
+    {% endif %}
     mix-blend-mode: multiply;
     text-align: left;
     text-transform: uppercase;
@@ -118,7 +122,9 @@ html {
 
 .labmanbubble {
     transform: translatey(0px);
+    {% if bouncing_text %}
     animation: float 5s ease-in-out infinite;
+    {% endif %}
     mix-blend-mode: multiply;
     text-align: left;
     text-transform: uppercase;
@@ -140,7 +146,9 @@ html {
 .modsel {
     cursor: pointer;
     transform: translatey(0px);
+    {% if bouncing_text %}
     animation: float 5s ease-in-out infinite;
+    {% endif %}
     mix-blend-mode: multiply;
     text-align: left;
     text-transform: uppercase;
