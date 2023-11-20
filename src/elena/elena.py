@@ -68,6 +68,7 @@ class eFlask(Flask):
         domain,
         kiwi_cost_to_play_game=5,
         ask_for_game_every_N_rounds=3,
+        bouncing_text=True,
         **kwargs,
     ):
         """
@@ -76,12 +77,14 @@ class eFlask(Flask):
         @param domain: website's domain
         @param kiwi_cost_to_play_game: how many kiwis does it cost to play a game? default value is 5
         @param ask_for_game_every_N_rounds: minimum number of rounds between games; default value is 3
+        @param bouncing_text: controls whether textboxes are animated to bounce up and down; default value is True
         """
         super().__init__(**kwargs)
         self.module_list = module_list
         self.domain = domain
         self.kiwi_cost_to_play_game = kiwi_cost_to_play_game
         self.ask_for_game_every_N_rounds = ask_for_game_every_N_rounds
+        self.bouncing_text = bouncing_text
         self.http_post_ptype_to_fn = dict_stitching(
             [m.http_post_ptype_to_fn for m in self.module_list]
         )
@@ -103,6 +106,7 @@ class eFlask(Flask):
                 self.trivia_qs["{}_trivia".format(m.fn_module_name)] = json.load(t)
         self.gen_elenajs()
         self.gen_elena_top_js()
+        self.gen_css()
 
     def eroute(self, rule: str, **options: t.Any) -> t.Callable[[F], F]:
         # https://github.com/pallets/flask/blob/main/src/flask/scaffold.py#L36
@@ -168,6 +172,17 @@ class eFlask(Flask):
             ask_for_game_every_N_rounds=self.ask_for_game_every_N_rounds,
         )
         with open("static/js/elena_top.js", "w") as f:
+            f.write(rendered_content)
+
+    def gen_css(self):
+        """
+        Generate a subjs file for the module. subjs file contains
+        a function for selecting a game.
+        """
+        env = Environment(loader=FileSystemLoader("."))
+        template = env.get_template("templates/elena.css")
+        rendered_content = template.render(bouncing_text=self.bouncing_text)
+        with open("static/css/elena.css", "w") as f:
             f.write(rendered_content)
 
     def handle_requests(self):
