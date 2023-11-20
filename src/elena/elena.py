@@ -162,8 +162,7 @@ class eFlask(Flask):
 
     def gen_elena_top_js(self):
         """
-        Generate a subjs file for the module. subjs file contains
-        a function for selecting a game.
+        Generate elena_top.js file.
         """
         env = Environment(loader=FileSystemLoader("."))
         template = env.get_template("templates/elena_top.js")
@@ -176,8 +175,7 @@ class eFlask(Flask):
 
     def gen_css(self):
         """
-        Generate a subjs file for the module. subjs file contains
-        a function for selecting a game.
+        Generate elena CSS style.
         """
         env = Environment(loader=FileSystemLoader("."))
         template = env.get_template("templates/elena.css")
