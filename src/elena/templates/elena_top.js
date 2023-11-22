@@ -125,28 +125,51 @@ function newYouBubble() {
 * @param {string} internal_type -> internal_type field,
 * blank by default
 */
-function send_http_request_to_domain(done_fn, error_fn, domain,
-    is_post, json, content_type, internal_type = "") {
-    let http_request = new XMLHttpRequest();
-    http_request.open(is_post ? "POST" : "GET", domain, false);
-    http_request.onreadystatechange = function() {
-        if (http_request.readyState === 4) {
-            if (http_request.status === 200) {
-                done_fn(http_request);
-            } else {
-                error_fn();
-            }
-        }
-    }
-    http_request.setRequestHeader("Content-Type",
-        is_post ? "application/json" : content_type);
-    http_request.setRequestHeader("Access-Control-Allow-Origin", "*");
-    http_request.setRequestHeader("Internal-Type", internal_type);
+function send_http_request_to_domain(done_fn, error_fn, domain, is_post, json, content_type, internal_type = "") {
+    const headers = {
+        "Content-Type": is_post ? "application/json" : content_type,
+        "Access-Control-Allow-Origin": "*",
+        "Internal-Type": internal_type
+    };
+
+    let options;
     if (is_post) {
-        http_request.send(json);
+        options = {
+            method: "POST",
+            headers: headers,
+            body: json
+        };
     } else {
-        http_request.send();
+        options = {
+            method: "GET",
+            headers: headers
+        };
     }
+
+    fetch(domain, options)
+        .then(response => {
+            if (response.ok) {
+                const contentType = response.headers.get("Content-Type");
+                console.log(response);
+                if (contentType && contentType.includes("application/json")) {
+                    let response_json = response.json();
+                    return response_json;
+                } else {
+                    let response_text = response.text();
+                    return response_text;
+                }
+            } else {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        })
+        .then(data => {
+            done_fn(data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            error_fn();
+        });
+
 }
 
 /**
