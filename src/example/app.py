@@ -10,7 +10,7 @@ import numpy as np
 import os
 import time
 from matplotlib import pyplot as plt
-from flask import request, Response, send_from_directory
+from flask import jsonify, request, Response, send_from_directory
 from PIL import Image
 from static.ml.stylize import stylize
 from elena import eFlask, Module, Game
@@ -32,15 +32,7 @@ def bonus():
     name and list of materials
     """
     bonus_str_src_arr = random.choice(bonus_qs)
-    bonus_str = [bonus_str_src_arr["property"]]
-    mat_arr = bonus_str_src_arr["materials"]
-    for i in range(0, len(mat_arr.keys())):
-        key = list(mat_arr.keys())[i]
-        bonus_str.append(key)
-        bonus_str.append(mat_arr[key])
-    bonus_str = str(bonus_str).replace(
-        "'", "").replace("[", "").replace("]", "")
-    return Response(bonus_str, mimetype='application/json')
+    return jsonify(bonus_str_src_arr)
 
 
 def nn_Art_art_keyword():
@@ -51,8 +43,7 @@ def nn_Art_art_keyword():
     art_pic_names = []
     # Need to keep track of number of iterations and kill runaway
     # requests to preserve cloud bandwidth.
-    styles_lst = ['lazy', 'mosaic',
-                  'wave', 'bayanihan', 'ghoul']
+    styles_lst = ["lazy", "mosaic", "wave", "bayanihan", "ghoul"]
     count = 0
     max_count = 5
     while len(art_pic_names) < 3:
@@ -64,8 +55,8 @@ def nn_Art_art_keyword():
             art_pic_names.append(a)
         count += 1
     art_pic_names = [Path(a).stem for a in art_pic_names]
-    art_pic_names = ','.join(art_pic_names)
-    return Response(art_pic_names, mimetype='text/html')
+    art_pic_names = ",".join(art_pic_names)
+    return Response(art_pic_names, mimetype="text/html")
 
 
 def nn_Art_bio_keyword():
@@ -80,15 +71,18 @@ def nn_Art_bio_keyword():
         if count > max_count:
             return
         b = random.choice(
-            [f for f in
-                os.popen("ls static/content_images/").read().split("\n")
-                if f not in bio_pic_names and f != ""])
+            [
+                f
+                for f in os.popen("ls static/content_images/").read().split("\n")
+                if f not in bio_pic_names and f != ""
+            ]
+        )
         if b not in bio_pic_names:
             assert b != ""
             bio_pic_names.append(b)
     bio_pic_names = [Path(b).stem for b in bio_pic_names]
-    bio_pic_names = ','.join(bio_pic_names)
-    return Response(bio_pic_names, mimetype='text/html')
+    bio_pic_names = ",".join(bio_pic_names)
+    return Response(bio_pic_names, mimetype="text/html")
 
 
 def art():
@@ -106,18 +100,20 @@ def art():
     c = Path("static/content_images/") / post_body["content_img"] / ".png"
     # s = Path("static/style_images/") + post_body["style_img"] + ".jpg"
     content_img = load_img_cv(c)
-    stylized_img = stylize(content_img, style=post_body['style_img'])
+    stylized_img = stylize(content_img, style=post_body["style_img"])
     # Required to run on Heroku. Heroku's filesystem frequently deletes
     # directories.
     os.system("mkdir -p static/gen_imgs/")
-    plt.imsave(Path("static/gen_imgs/stylized_img") /
-               str(stylized_img_idx) / ".png",
-               np.squeeze(stylized_img))
+    plt.imsave(
+        Path("static/gen_imgs/stylized_img") / str(stylized_img_idx) / ".png",
+        np.squeeze(stylized_img),
+    )
     stylized_img_idx += 1
     NN_ART_MUTEX = False
-    return Response(Path("static/gen_imgs/stylized_img")
-                    / str(stylized_img_idx - 1)
-                    / ".png", mimetype="text/html")
+    return Response(
+        Path("static/gen_imgs/stylized_img") / str(stylized_img_idx - 1) / ".png",
+        mimetype="text/html",
+    )
 
 
 def load_img_cv(img_path):
@@ -127,8 +123,8 @@ def load_img_cv(img_path):
     @return: numpy array
     """
     im = Image.open(img_path)
-    if im.mode != 'RGB':
-        im = im.convert('RGB')
+    if im.mode != "RGB":
+        im = im.convert("RGB")
     return np.array(im)
 
 
@@ -136,15 +132,22 @@ def load_img_cv(img_path):
 
 # Create necessary objects for trivia game
 mymod0 = Module("Temperature Controller Part I", [])
-mymod1 = Module("Temperature Controller Part II",
-                [Game("Experiment0", {}, {'bonus': bonus}),
-                 Game("ArtGen0",
-                      {'art': art},
-                      {'nn_art_bio_keyword': nn_Art_bio_keyword,
-                       'nn_art_art_keyword': nn_Art_art_keyword})])
+mymod1 = Module(
+    "Temperature Controller Part II",
+    [
+        Game("Experiment0", {}, {"bonus": bonus}),
+        Game(
+            "ArtGen0",
+            {"art": art},
+            {
+                "nn_art_bio_keyword": nn_Art_bio_keyword,
+                "nn_art_art_keyword": nn_Art_art_keyword,
+            },
+        ),
+    ],
+)
 mymod2 = Module("Bacterial Culture", [])
-app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME,
-             import_name=__name__)
+app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME, import_name=__name__)
 
 # Load the bonus questions into a global bonus_qs variable
 bonus_round_json_handler = open("./static/questions/bonus_round.json")
@@ -152,7 +155,8 @@ bonus_qs = json.load(bonus_round_json_handler)
 
 # Routes
 
-@app.eroute('/', methods=['POST', 'GET'])
+
+@app.eroute("/", methods=["POST", "GET"])
 def root(mod):
     """
     The root route. The basic route for all incoming HTTP requests.
@@ -165,7 +169,7 @@ def root(mod):
 
 # Note: Heroku periodically deletes image files.
 # May need to add storage ephemerality for other PaaSs.
-@app.route('/static/gen_imgs/<path:filename>')
+@app.route("/static/gen_imgs/<path:filename>")
 def gen_img(filename):
     """
     Send users the generated image file based on requested path.
@@ -178,15 +182,15 @@ def gen_img(filename):
 
 # @app.before_request
 # def firewall():
-    """
-    Only tested for Heroku PaaS. Check the IP whitelist file
-    allowed_ips_list and do nothing if we detect a blacklisted IP.
-    """
-    # if "--local" not in sys.argv:
-    #    with open("allowed_ips_list", "r") as a:
-    #        allowed_ips = a.read().split('\n')
-    #        if request.headers['X-Forwarded-For'] not in allowed_ips:
-    #            abort(403)
+#    """
+#    Only tested for Heroku PaaS. Check the IP whitelist file
+#    allowed_ips_list and do nothing if we detect a blacklisted IP.
+#    """
+#    if "--local" not in sys.argv:
+#       with open("allowed_ips_list", "r") as a:
+#           allowed_ips = a.read().split('\n')
+#           if request.headers['X-Forwarded-For'] not in allowed_ips:
+#               abort(403)
 
 
 if __name__ == "__main__":

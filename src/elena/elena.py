@@ -2,7 +2,7 @@
 
 # Imports
 
-from flask import Flask, Response, request, render_template
+from flask import jsonify, Flask, Response, request, render_template
 from functools import partial
 from itertools import chain
 from jinja2 import Environment, FileSystemLoader, Template
@@ -211,7 +211,7 @@ class eFlask(Flask):
         if request.headers.get("Internal-Type") in self.trivia_ptype:
             qdict = self.trivia_qs[request.headers.get("Internal-Type")]
             q = random.choice(list(qdict.keys()))
-            return Response('["{}","{}"]'.format(q, qdict[q]), mimetype="text/html")
+            return jsonify({"question": q, "answer": qdict[q]})
         elif request.headers.get("Internal-Type") in self.manual_ptype:
             with open(
                 Path("static/html/")

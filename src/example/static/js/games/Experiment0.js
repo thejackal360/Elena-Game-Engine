@@ -1,4 +1,5 @@
-var bonus_txt = [];
+var bonus_content = {};
+var bonus_txt = "";
 var bonus_idx = -1;
 var given_temp = false;
 var ready_for_substance_guess = false;
@@ -14,14 +15,17 @@ function Experiment0(val) {
     if (!given_temp) {
         youHold = true;
         handle_bonus = function(h) {
-            bonus_txt = h.responseText.split(',');
+            bonus_content = h;
             chelsea_msgs.push("Bonus round!");
-            chelsea_msgs.push("Here are the " + bonus_txt[0] + " points of different substances...");
-            chelsea_msgs.push(bonus_txt[1] + "(" + bonus_txt[2] + "&#176C), " +
-                              bonus_txt[3] + "(" + bonus_txt[4] + "&#176C), " +
-                              bonus_txt[5] + "(" + bonus_txt[6] + "&#176C)");
+            chelsea_msgs.push("Here are the " + h["property"] + " points of different substances...");
+            bonus_txt = "";
+            for (var key in h["materials"]) {
+                bonus_txt += key + "(" + h["materials"][key] + "&#176C), ";
+            }
+            bonus_txt = bonus_txt.slice(0, -2);
+            chelsea_msgs.push(bonus_txt);
             chelsea_msgs.push("Guess one temperature, and I'll tell you whether the substance starts " +
-                               bonus_txt[0] + "...");
+                               h["property"] + "...");
             bonus_idx = randint(3);
             youHold = false;
             given_temp = true;
@@ -45,22 +49,26 @@ function Experiment0(val) {
         }
     } else {
         if (!isNaN(val)) {
-            substance_name = bonus_txt[(bonus_idx * 2) + 1];
-            celsius = Number(bonus_txt[(bonus_idx * 2) + 2])
+            let tmp_idx = 0;
+            for (var key in bonus_content["materials"]) {
+                if (tmp_idx == bonus_idx) {
+                    substance_name = key;
+                    celsius = Number(bonus_content[key]);
+                    break;
+                }
+                tmp_idx += 1;
+            }
             if (celsius <= val) {
                 chelsea_msgs.push("Substance " +
-                    ((bonus_txt[0] == "melting") ? "melts" : "boils") +
+                    ((bonus_content["property"] == "melting") ? "melts" : "boils") +
                     "!"
                 );
             } else {
                 chelsea_msgs.push("Substance doesn't " +
-                    ((bonus_txt[0] == "melting") ? "melt" : "boil") +
+                    ((bonus_content["property"] == "melting") ? "melt" : "boil") +
                     ".");
             }
-            chelsea_msgs.push("What's your best guess? " +
-                    bonus_txt[1] + " (" + bonus_txt[2] + "&#176C)," +
-                    bonus_txt[3] + " (" + bonus_txt[4] + "&#176C), or " +
-                    bonus_txt[5] + " (" + bonus_txt[6] + "&#176C)" + "?");
+            chelsea_msgs.push("What's your best guess? " + bonus_txt + "?");
             ready_for_substance_guess = true;
         } else {
             chelsea_msgs.push("Invalid number. Please enter again.");

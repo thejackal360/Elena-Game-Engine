@@ -78,9 +78,8 @@ function Bacterial_Culture_convo(val) {
         } else {
             youHold = true;
             get_qa = function(h) {
-                let responseText = eval(h.responseText);
-                chelsea_msgs.push(responseText[0]);
-                ans_txt = responseText[1];
+                ans_txt = h["answer"];
+                chelsea_msgs.push(h["question"]);
                 question_asked = true;
                 youHold = false;
             }
@@ -98,19 +97,15 @@ function Bacterial_Culture_convo(val) {
 */
 function Bacterial_Culture_start_lab() {
     modname = "Bacterial_Culture";
-    $("#pick_mod").animate({opacity: 0}, {duration: 1000});
+    $("#pick_mod").animate({ opacity: 0 }, { duration: 1000 });
     scrollToTop();
-    $("#pick_mod").promise().done(function() {
+    $("#pick_mod").promise().done(function () {
         $("#pick_mod").hide();
-        send_http_get_request(function(h) {
-            /* Note: W3 spec prohibits placing <div> inside <p>
-               Please see... https://stackoverflow.com/questions/
-                             10763780/
-                             putting-div-inside-p-is-adding-an-extra-p
-            */
+        send_http_get_request(function (data) {
+            // Assuming data is the response text, modify accordingly if it's different
             $("#lab_manual").html(
                 "<div class=\"labmanbubble\">" +
-                h.responseText + "</div>" +
+                data + "</div>" +
                 "</br></br><p class=\"modsel\" " +
                 "onclick=\"Bacterial_Culture_start_game()\">" +
                 "Start Prelab</p></br></br>"
@@ -118,8 +113,8 @@ function Bacterial_Culture_start_lab() {
             $("#lab_manual").show();
             $("#chat").show();
             $("#top_chat").show();
-            $("#lab_manual").animate({opacity: 1}, {duration: 1000});
-            $("#chat").animate({opacity: 1}, {duration: 1000});
+            $("#lab_manual").animate({ opacity: 1 }, { duration: 1000 });
+            $("#chat").animate({ opacity: 1 }, { duration: 1000 });
         }, "application/json", modname + "_lab_manual");
     });
 }
