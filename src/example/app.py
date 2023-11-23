@@ -55,8 +55,7 @@ def nn_Art_art_keyword():
             art_pic_names.append(a)
         count += 1
     art_pic_names = [Path(a).stem for a in art_pic_names]
-    art_pic_names = ",".join(art_pic_names)
-    return Response(art_pic_names, mimetype="text/html")
+    return jsonify(art_pic_names)
 
 
 def nn_Art_bio_keyword():
@@ -81,8 +80,7 @@ def nn_Art_bio_keyword():
             assert b != ""
             bio_pic_names.append(b)
     bio_pic_names = [Path(b).stem for b in bio_pic_names]
-    bio_pic_names = ",".join(bio_pic_names)
-    return Response(bio_pic_names, mimetype="text/html")
+    return jsonify(bio_pic_names)
 
 
 def art():
@@ -97,21 +95,24 @@ def art():
         time.sleep(3)
     NN_ART_MUTEX = True
     post_body = json.loads(request.data)
-    c = Path("static/content_images/") / post_body["content_img"] / ".png"
+    c = Path("static/content_images/") / (post_body["content_img"] + ".png")
     # s = Path("static/style_images/") + post_body["style_img"] + ".jpg"
     content_img = load_img_cv(c)
     stylized_img = stylize(content_img, style=post_body["style_img"])
     # Required to run on Heroku. Heroku's filesystem frequently deletes
     # directories.
-    os.system("mkdir -p static/gen_imgs/")
+    os.system("mkdir -p static/gen_imgs/stylized_img")
+    final_path = str(
+        Path("static/gen_imgs/stylized_img") / (str(stylized_img_idx) + ".png")
+    )
     plt.imsave(
-        Path("static/gen_imgs/stylized_img") / str(stylized_img_idx) / ".png",
+        final_path,
         np.squeeze(stylized_img),
     )
     stylized_img_idx += 1
     NN_ART_MUTEX = False
     return Response(
-        Path("static/gen_imgs/stylized_img") / str(stylized_img_idx - 1) / ".png",
+        final_path,
         mimetype="text/html",
     )
 
