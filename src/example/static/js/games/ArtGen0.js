@@ -16,7 +16,8 @@ var wantsart = false;
 function ArtGen0(val) {
     if (!wantsart) {
         if (!asked) {
-            chelsea_msgs.push("Pay 5 kiwis to see a trick? " +
+            chelsea_msgs.push("Pay " + kiwi_cost_to_play_game.toString() +
+                      " kiwis to see a trick? " +
 		              "Please answer \"yes\" if you do.");
             asked = true;
         } else {
@@ -81,11 +82,15 @@ function ArtGen0(val) {
         }
     } else if ((bioword != "") && (artword == "") && !hitKeyword_art) {
         art_word_pick = function (h) {
+            let pick_statement = "Alright, now pick one of these words - ";
+            artword_arr = h;
+            for (let i = 0; i < artword_arr.length; i++) {
+                pick_statement += artword_arr[i] + ", ";
+            }
+            pick_statement = pick_statement.slice(0, -2);
             chelsea_msgs.push(
-                "Alright, now pick one of these words - " +
-                h.responseText
+                pick_statement
             );
-            artword_arr = h.responseText.split(",");
             chelsea_msgs.push(
                 "Again, please just one word."
             );
@@ -95,13 +100,18 @@ function ArtGen0(val) {
                               internal_type = "nn_art_art_keyword");
     } else if ((bioword == "") && (artword == "") && !hitKeyword) {
         bio_word_pick = function(h) {
+            let pick_statement = "Pick one of these words - ";
+            bioword_arr = h;
             chelsea_msgs.push(
                 "Okay, " + name + "."
             );
+            for (let i = 0; i < bioword_arr.length; i++) {
+                pick_statement += bioword_arr[i] + ", ";
+            }
+            pick_statement = pick_statement.slice(0, -2);
             chelsea_msgs.push(
-                "Pick one of these words - " + h.responseText
+                pick_statement
             );
-            bioword_arr = h.responseText.split(",");
             chelsea_msgs.push(
                 "Just one word. I'm not very good at this right now."
             );
@@ -111,7 +121,7 @@ function ArtGen0(val) {
                                              "nn_art_bio_keyword");
     } else if ((name != "") && (bioword != "") && (artword != "")) {
         get_stylized = function(h) {
-            style_url = h.responseText;
+            style_url = h;
             chelsea_msgs.push(
                 '<img src="' + style_url + 
                 '" onload="scrollToBottom()"/></br>'

@@ -150,7 +150,6 @@ function send_http_request_to_domain(done_fn, error_fn, domain, is_post, json, c
         .then(response => {
             if (response.ok) {
                 const contentType = response.headers.get("Content-Type");
-                console.log(response);
                 if (contentType && contentType.includes("application/json")) {
                     let response_json = response.json();
                     return response_json;

@@ -19,8 +19,9 @@ function Experiment0(val) {
             chelsea_msgs.push("Bonus round!");
             chelsea_msgs.push("Here are the " + h["property"] + " points of different substances...");
             bonus_txt = "";
-            for (var key in h["materials"]) {
-                bonus_txt += key + "(" + h["materials"][key] + "&#176C), ";
+            for (let i = 0; i < h["materials"]["names"].length; i++) {
+                bonus_txt += h["materials"]["names"][i] + " (" +
+                             h["materials"]["temperatures"][i] + "&#176C), ";
             }
             bonus_txt = bonus_txt.slice(0, -2);
             chelsea_msgs.push(bonus_txt);
@@ -36,7 +37,7 @@ function Experiment0(val) {
         let kiwi_inc = false;
         if (scrub_str(val) == scrub_str(substance_name)) {
             chelsea_msgs.push("Correct!");
-            inc_kiwi_count(5);
+            inc_kiwi_count(kiwi_cost_to_play_game);
             kiwi_inc = true;
         } else {
             chelsea_msgs.push("Wrong! It's " + substance_name + ".");
@@ -49,15 +50,8 @@ function Experiment0(val) {
         }
     } else {
         if (!isNaN(val)) {
-            let tmp_idx = 0;
-            for (var key in bonus_content["materials"]) {
-                if (tmp_idx == bonus_idx) {
-                    substance_name = key;
-                    celsius = Number(bonus_content[key]);
-                    break;
-                }
-                tmp_idx += 1;
-            }
+            substance_name = bonus_content["materials"]["names"][bonus_idx];
+            celsius = bonus_content["materials"]["temperatures"][bonus_idx];
             if (celsius <= val) {
                 chelsea_msgs.push("Substance " +
                     ((bonus_content["property"] == "melting") ? "melts" : "boils") +
