@@ -106,8 +106,9 @@ function Temperature_Controller_Part_II_start_lab() {
             $("#lab_manual").html(
                 "<div class=\"labmanbubble\">" +
                 data + "</div>" +
-                "</br></br><p class=\"modsel\" " +
-                "onclick=\"Temperature_Controller_Part_II_start_game()\">" +
+                "</br></br><p class=\"modsel\" tabindex=\"0\" " +
+                "onkeydown=\"handleEnterSpaceClick(event)\"" +
+                "onclick=\"Temperature_Controller_Part_II_start_game()\" >" +
                 "Start Prelab</p></br></br>"
             );
             $("#lab_manual").show();
