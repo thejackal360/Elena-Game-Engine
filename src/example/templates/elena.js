@@ -106,8 +106,9 @@ function {{ module_name }}_start_lab() {
             $("#lab_manual").html(
                 "<div class=\"labmanbubble\">" +
                 data + "</div>" +
-                "</br></br><p class=\"modsel\" " +
-                "onclick=\"{{ module_name }}_start_game()\">" +
+                "</br></br><p class=\"modsel\" tabindex=\"0\" " +
+                "onkeydown=\"handleEnterSpaceClick(event)\"" +
+                "onclick=\"{{ module_name }}_start_game()\" >" +
                 "Start Prelab</p></br></br>"
             );
             $("#lab_manual").show();

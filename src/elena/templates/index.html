@@ -21,12 +21,27 @@
 
   <body>
 
+    <script>
+      function handleEnterSpaceClick(event) {
+        // Check if the pressed key is either space (code 32) or enter (code 13)
+        if (event.code === 'Space' || event.code === 'Enter') {
+          event.preventDefault(); // Prevent the default action (e.g., scrolling for space key)
+
+          // Get the currently focused element
+          const focusedElement = document.activeElement;
+
+          // Trigger a click on the focused element
+          focusedElement.click();
+        }
+      }
+    </script>
+
     <div id="pick_mod">
         <div id="selectmodtext">Hello there! Please select a lab module.</div>
         </br>
         </br>
 {% for fn_module_name,module_name in pick_mod.items() %}
-        <p class="modsel" onclick="{{fn_module_name}}_start_lab()">{{module_name}}</p>
+        <p class="modsel" tabindex="0" onkeydown="handleEnterSpaceClick(event)" onclick="{{fn_module_name}}_start_lab()">{{module_name}}</p>
         </br>
         </br>
 {% endfor %}
@@ -50,7 +65,7 @@
       <span>
         <!--- https://stackoverflow.com/questions/8523028/left-center-and-right-aligned-text-on-the-same-line -->
         <div class="back-arrow-bubble" style="float: left;">
-            <img width="32" class="back-arrow-icon" onclick="back_button_click();" alt="Arrow full left - Picol.org, CC BY 3.0 &lt;https://creativecommons.org/licenses/by/3.0&gt;, via Wikimedia Commons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Arrow_full_left.svg/32px-Arrow_full_left.svg.png"></img>
+            <img width="32" class="back-arrow-icon" tabindex="0" onkeydown="handleEnterSpaceClick(event)" onclick="back_button_click();" alt="Arrow full left - Picol.org, CC BY 3.0 &lt;https://creativecommons.org/licenses/by/3.0&gt;, via Wikimedia Commons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Arrow_full_left.svg/32px-Arrow_full_left.svg.png"></img>
         </div>
         <div style="margin: 0 auto; width:10%;">&#129373;<span id="kiwicount">0</span></div>
       </span>
