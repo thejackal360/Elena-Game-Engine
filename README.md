@@ -23,10 +23,23 @@ The following are the Python dependencies, included in `pyproject.toml` and in
 
 ## Usage
 
-Please see app.py for an example of the Python app file. Within that file, the most important section of code is the object definitions.
+Please see `src/example/app.py` for an example of the Python app file.
+Within that file, the most important section of code is the object definitions.
 This is where the user organizes the trivia game's structure.
 
+To make sure that the example runs smoothly please install the requirements 
+```bash
+$ cd src/example
+$ pip3 install -r requirements.txt
 ```
+
+and then run the example
+```bash
+$ ./app.py --local
+```
+
+
+```Python
 # Object Definitions
 
 # Create necessary objects for trivia game
@@ -43,7 +56,7 @@ app = eFlask([mymod0, mymod1, mymod2], DOMAIN_NAME,
 ```
 
 Most requests will be routed through a root route:
-```
+```Python
 @app.eroute('/', methods=['POST', 'GET'])
 def root(mod):
     """
