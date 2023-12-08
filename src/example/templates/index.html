@@ -61,13 +61,13 @@
         </div>
     </div>
 
-    <div id="kbar" class="kiwibar">
+    <div id="kbar" class="pointbar">
       <span>
         <!--- https://stackoverflow.com/questions/8523028/left-center-and-right-aligned-text-on-the-same-line -->
         <div class="back-arrow-bubble" style="float: left;">
             <img width="32" class="back-arrow-icon" tabindex="0" onkeydown="handleEnterSpaceClick(event)" onclick="back_button_click();" alt="Arrow full left - Picol.org, CC BY 3.0 &lt;https://creativecommons.org/licenses/by/3.0&gt;, via Wikimedia Commons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Arrow_full_left.svg/32px-Arrow_full_left.svg.png"></img>
         </div>
-        <div style="margin: 0 auto; width:10%;">&#129373;<span id="kiwicount">0</span></div>
+        <div style="margin: 0 auto; width:10%;">{{ point_text | safe }}<span id="pointcount">0</span></div>
       </span>
     </div>
     

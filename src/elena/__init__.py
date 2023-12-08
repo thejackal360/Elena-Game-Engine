@@ -1,3 +1,3 @@
 #!/usr/bin/env python3
 
-from .elena import eFlask, Module, Game
+from .elena import eFlask, Module, Game, Point

@@ -12,14 +12,14 @@ var question_sel = -1;
 var rounds_since_last_game = 0;
 
 var ans_txt = "";
-var kiwi_inc_waits = 0;
-var kiwicount_var = 0;
+var point_inc_waits = 0;
+var pointcount_var = 0;
 var herready = false;
 var already_hit = false;
 var chelsea_msgs = ["Hi! I'm Chelsea. What's your name?"];
 var convo_counter = 0;
 
-const kiwi_cost_to_play_game = {{ kiwi_cost_to_play_game }};
+const point_cost_to_play_game = {{ point_cost_to_play_game }};
 const ask_for_game_every_N_rounds = {{ ask_for_game_every_N_rounds }};
 
 /**
@@ -224,36 +224,36 @@ function start() {
 */
 
 /**
-* Pay kiwi_cost_to_play_game kiwis to play a game.
+* Pay point_cost_to_play_game points to play a game.
 */
 function pay_to_play() {
-    kiwicount_var -= kiwi_cost_to_play_game;
-    document.getElementById("kiwicount").innerHTML = kiwicount_var;
+    pointcount_var -= point_cost_to_play_game;
+    document.getElementById("pointcount").innerHTML = pointcount_var;
 }
 
 /**
-* Increment someone's score by i kiwis, either through answering a
+* Increment someone's score by i points, either through answering a
 * trivia question or through a bonus round.
-* @param {BigInt} i - number of kiwis by which to increment the user's
+* @param {BigInt} i - number of points by which to increment the user's
 * score.
 */
-function inc_kiwi_count(i = 1) {
+function inc_point_count(i = 1) {
     // Wait for chelsea msg to be posted.
     youHold = true;
     if (i == 1) {
-        var kiwi_convo_idx = randint(3);
-        if (kiwi_convo_idx == 0) {
-            chelsea_msgs.push("Here's a kiwi. One less for me.");
-        } else if (kiwi_convo_idx == 1) {
-            chelsea_msgs.push("Have a kiwi.");
+        var point_convo_idx = randint(3);
+        if (point_convo_idx == 0) {
+            chelsea_msgs.push("Here's a {{ point_text }}. One less for me.");
+        } else if (point_convo_idx == 1) {
+            chelsea_msgs.push("Have a {{ point_text }}.");
         } else {
-            chelsea_msgs.push("I shall award you with one kiwi.");
+            chelsea_msgs.push("I shall award you with one {{ point_text }}.");
         }
     } else if (i > 0) {
         chelsea_msgs.push("Congrats! Here's a " +
-            i.toString() + " kiwi bonus!");
+            i.toString() + " {{ point_text }} bonus!");
     }
-    kiwi_inc_waits += i;
+    point_inc_waits += i;
 }
 
 /**
@@ -301,7 +301,7 @@ function back_button_click() {
     $("#chat").animate({opacity: 0}, {duration: 3000}).promise().done(function() {
         $("#chat").hide();
         document.getElementById("final_score").innerHTML =
-            "<br/>Final score: " + kiwicount_var.toString() + "&#129373;";
+            "<br/>Final score: " + pointcount_var.toString() + "{{ point_text }}";
         $("#final_score").animate({opacity: 1}, {duration: 3000}).promise().done(function() {
             $("#final_score").animate({opacity: 0}, {duration: 3000}).promise().done(function() {
                 document.location.reload();

@@ -2,6 +2,7 @@
 
 # Imports
 
+from enum import Enum
 from flask import jsonify, Flask, Response, request, render_template
 from functools import partial
 from itertools import chain
@@ -10,6 +11,7 @@ from pathlib import Path
 import json
 import random
 import sys
+from typing import Dict
 
 # https://github.com/pallets/flask/blob/main/src/flask/scaffold.py#L36
 import typing as t
@@ -57,6 +59,30 @@ def dict_stitching(list_of_dicts):
 # Core classes
 
 
+class Point(Enum):
+    """
+    Enumeration representing different types of points
+    """
+
+    KIWI = 1
+    STRAWBERRY = 2
+    CHERRY = 3
+
+
+"""
+A dictionary mapping Point enum values to corresponding emoji representations.
+
+This dictionary is used to associate each Point type with its corresponding
+Unicode emoji representation. It allows for easy conversion between Point
+types and the emojis used to visually represent them.
+"""
+PointToEmoji: Dict[Point, str] = {
+    Point.KIWI: "&#129373;",
+    Point.STRAWBERRY: "&#127827;",
+    Point.CHERRY: "&#127826;",
+}
+
+
 class eFlask(Flask):
     """
     Class used to instantiate app objects.
@@ -66,25 +92,28 @@ class eFlask(Flask):
         self,
         module_list,
         domain,
-        kiwi_cost_to_play_game=5,
+        point_cost_to_play_game=5,
         ask_for_game_every_N_rounds=3,
         bouncing_text=True,
+        point=Point.KIWI,
         **kwargs,
     ):
         """
         Initializer.
         @param module_list: list of module objects for trivia game
         @param domain: website's domain
-        @param kiwi_cost_to_play_game: how many kiwis does it cost to play a game? default value is 5
+        @param point_cost_to_play_game: how many points does it cost to play a game? default value is 5
         @param ask_for_game_every_N_rounds: minimum number of rounds between games; default value is 3
         @param bouncing_text: controls whether textboxes are animated to bounce up and down; default value is True
         """
         super().__init__(**kwargs)
         self.module_list = module_list
         self.domain = domain
-        self.kiwi_cost_to_play_game = kiwi_cost_to_play_game
+        self.point_cost_to_play_game = point_cost_to_play_game
         self.ask_for_game_every_N_rounds = ask_for_game_every_N_rounds
         self.bouncing_text = bouncing_text
+        self.point = point
+        self.point_text = PointToEmoji[self.point]
         self.http_post_ptype_to_fn = dict_stitching(
             [m.http_post_ptype_to_fn for m in self.module_list]
         )
@@ -157,6 +186,7 @@ class eFlask(Flask):
                     elena_template.render(
                         module_name=m.fn_module_name,
                         module_name_in_quotes='"' + m.fn_module_name + '"',
+                        point_text=self.point_text,
                     )
                 )
 
@@ -167,8 +197,9 @@ class eFlask(Flask):
         env = Environment(loader=FileSystemLoader("."))
         template = env.get_template("templates/elena_top.js")
         rendered_content = template.render(
-            kiwi_cost_to_play_game=self.kiwi_cost_to_play_game,
+            point_cost_to_play_game=self.point_cost_to_play_game,
             ask_for_game_every_N_rounds=self.ask_for_game_every_N_rounds,
+            point_text=self.point_text,
         )
         with open("static/js/elena_top.js", "w") as f:
             f.write(rendered_content)
@@ -246,6 +277,7 @@ class eFlask(Flask):
                 module_js_globals=module_js_globals,
                 module_subjs=module_subjs,
                 pick_mod=pick_mod,
+                point_text=self.point_text,
             )
 
 
