@@ -243,15 +243,15 @@ function inc_point_count(i = 1) {
     if (i == 1) {
         var point_convo_idx = randint(3);
         if (point_convo_idx == 0) {
-            chelsea_msgs.push("Here's a &#127826;. One less for me.");
+            chelsea_msgs.push("Here's a &#129373;. One less for me.");
         } else if (point_convo_idx == 1) {
-            chelsea_msgs.push("Have a &#127826;.");
+            chelsea_msgs.push("Have a &#129373;.");
         } else {
-            chelsea_msgs.push("I shall award you with one &#127826;.");
+            chelsea_msgs.push("I shall award you with one &#129373;.");
         }
     } else if (i > 0) {
         chelsea_msgs.push("Congrats! Here's a " +
-            i.toString() + " &#127826; bonus!");
+            i.toString() + " &#129373; bonus!");
     }
     point_inc_waits += i;
 }
@@ -301,7 +301,7 @@ function back_button_click() {
     $("#chat").animate({opacity: 0}, {duration: 3000}).promise().done(function() {
         $("#chat").hide();
         document.getElementById("final_score").innerHTML =
-            "<br/>Final score: " + pointcount_var.toString() + "&#127826;";
+            "<br/>Final score: " + pointcount_var.toString() + "&#129373;";
         $("#final_score").animate({opacity: 1}, {duration: 3000}).promise().done(function() {
             $("#final_score").animate({opacity: 0}, {duration: 3000}).promise().done(function() {
                 document.location.reload();
