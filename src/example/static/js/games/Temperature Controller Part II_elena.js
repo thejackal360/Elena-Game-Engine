@@ -56,6 +56,11 @@ function Temperature_Controller_Part_II_convo(val) {
         // Race condition: No youHold and no more chelsea_msgs
         // Need to hold until you generate topic content.
         chelsea_msgs.push("Good to meet you, " + val);
+        chelsea_msgs.push("Answer trivia questions to earn &#129373;s.");
+        if (Temperature_Controller_Part_IINumTopics > 1) {
+            chelsea_msgs.push("Pay &#129373;s to play mini games.");
+        }
+        chelsea_msgs.push("Let's get started!");
         topic = Temperature_Controller_Part_II_randint_topics();
         Temperature_Controller_Part_II_convo(val);
     } else if (topic == Temperature_Controller_Part_IITriviaTopic) {
