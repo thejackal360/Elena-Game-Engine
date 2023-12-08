@@ -13,7 +13,7 @@ from matplotlib import pyplot as plt
 from flask import jsonify, request, Response, send_from_directory
 from PIL import Image
 from static.ml.stylize import stylize
-from elena import eFlask, Module, Game
+from elena import eFlask, Module, Game, Point
 
 # Constants
 

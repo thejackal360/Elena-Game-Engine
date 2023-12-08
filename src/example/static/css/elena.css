@@ -47,7 +47,7 @@ body {
     cursor: pointer;
 }
 
-.kiwibar {
+.pointbar {
     overflow: hidden;
     background-color: grey;
     position: fixed;

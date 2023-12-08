@@ -1,12 +1,12 @@
 /**
-* Check whether chat topic is valid given (a) number of kiwis,
+* Check whether chat topic is valid given (a) number of points,
 * or trivia points earned by the user for correct answers, and (b)
 * the number of rounds since the last game.
 * @param {BigInt} _t - topic index; limited by NumTopics constant
 * in generated *_globals.js file in static/js/games/
 */
 function Bacterial_Culture_acceptable_topic(_t) {
-    if (((kiwicount_var >= kiwi_cost_to_play_game) &&
+    if (((pointcount_var >= point_cost_to_play_game) &&
          (rounds_since_last_game >= ask_for_game_every_N_rounds) &&
          (_t != Bacterial_CultureTriviaTopic)) ||
          (_t == Bacterial_CultureTriviaTopic)) {
@@ -17,7 +17,7 @@ function Bacterial_Culture_acceptable_topic(_t) {
 }
 
 /**
-* Check whether chat topic is valid given (a) number of kiwis,
+* Check whether chat topic is valid given (a) number of points,
 * or trivia points earned by the user for correct answers, and (b)
 * the number of rounds since the last game.
 * @param {BigInt} _t - topic index; limited by NumTopics constant
@@ -56,20 +56,20 @@ function Bacterial_Culture_convo(val) {
         // Race condition: No youHold and no more chelsea_msgs
         // Need to hold until you generate topic content.
         chelsea_msgs.push("Good to meet you, " + val);
-        chelsea_msgs.push("Answer trivia questions to earn &#129373;s.");
+        chelsea_msgs.push("Answer trivia questions to earn &#127826;s.");
         if (Bacterial_CultureNumTopics > 1) {
-            chelsea_msgs.push("Pay &#129373;s to play mini games.");
+            chelsea_msgs.push("Pay &#127826;s to play mini games.");
         }
         chelsea_msgs.push("Let's get started!");
         topic = Bacterial_Culture_randint_topics();
         Bacterial_Culture_convo(val);
     } else if (topic == Bacterial_CultureTriviaTopic) {
         if (question_asked) {
-            let kiwi_inc = false;
+            let point_inc = false;
             if (scrub_str(ans_txt) == scrub_str(val)) {
                 chelsea_msgs.push("That is correct!");
-                inc_kiwi_count();
-                kiwi_inc = true;
+                inc_point_count();
+                point_inc = true;
             } else {
                 chelsea_msgs.push("Incorrect! The answer is: " +
                     ans_txt
@@ -77,7 +77,7 @@ function Bacterial_Culture_convo(val) {
             }
             question_asked = false;
             topic = Bacterial_Culture_randint_topics();
-            if (!kiwi_inc) {
+            if (!point_inc) {
                 Bacterial_Culture_convo(val);
             }
         } else {
@@ -143,18 +143,18 @@ function Bacterial_Culture_start_game() {
                 else bub.innerHTML += ".";
             }
         }, 1000);
-        var kiwi_inc_interval = window.setInterval(function() {
+        var point_inc_interval = window.setInterval(function() {
             if ((chelsea_msgs.length == 0) &&
-                (kiwi_inc_waits > 0)) {
-                kiwicount_var += kiwi_inc_waits;
-                kiwi_inc_waits = 0;
-                $("#kiwicount").fadeOut(100).fadeIn(100).fadeOut(100).
+                (point_inc_waits > 0)) {
+                pointcount_var += point_inc_waits;
+                point_inc_waits = 0;
+                $("#pointcount").fadeOut(100).fadeIn(100).fadeOut(100).
                                          fadeIn(100).fadeOut(100).
                                          fadeIn(100).fadeOut(100).
                                          fadeIn(100).fadeOut(100).
-                    html(kiwicount_var).fadeIn(100);
-                document.getElementById("kiwicount").innerHTML =
-                    kiwicount_var;
+                    html(pointcount_var).fadeIn(100);
+                document.getElementById("pointcount").innerHTML =
+                    pointcount_var;
                 youHold = false;
                 Bacterial_Culture_convo(null);
                 newChelseaBubble();
