@@ -11,6 +11,7 @@ from pathlib import Path
 import json
 import random
 import sys
+from typing import Dict
 
 # https://github.com/pallets/flask/blob/main/src/flask/scaffold.py#L36
 import typing as t
@@ -59,12 +60,23 @@ def dict_stitching(list_of_dicts):
 
 
 class Point(Enum):
+    """
+    Enumeration representing different types of points
+    """
+
     KIWI = 1
     STRAWBERRY = 2
     CHERRY = 3
 
 
-PointToEmoji = {
+"""
+A dictionary mapping Point enum values to corresponding emoji representations.
+
+This dictionary is used to associate each Point type with its corresponding
+Unicode emoji representation. It allows for easy conversion between Point
+types and the emojis used to visually represent them.
+"""
+PointToEmoji: Dict[Point, str] = {
     Point.KIWI: "&#129373;",
     Point.STRAWBERRY: "&#127827;",
     Point.CHERRY: "&#127826;",
