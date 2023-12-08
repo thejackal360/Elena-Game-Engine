@@ -83,6 +83,10 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
+A "local run" is when the user is hosting and accessing the server on
+localhost. In other words, the server is hosted on the same machine that
+is accessing it.
+
 ## Install/Project Configuration
 
 To create a new Elena-based project, first install the Elena library and its dependencies from the cloned git repo's root:
