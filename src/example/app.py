@@ -195,4 +195,6 @@ def gen_img(filename):
 
 
 if __name__ == "__main__":
+    print("\033[91mIf not hosting on a remote server with a URL, " + \
+          "remember to run with the '--local' flag!\033[0m")
     app.run(debug=True)
