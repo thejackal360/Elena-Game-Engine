@@ -346,7 +346,7 @@ class Game:
         @param gname: Game name
         @param http_post_ptype_to_fn: packet type name to
         function dictionary (POST requests)
-        @param http_post_ptype_to_fn: packet type name to
+        @param http_get_ptype_to_fn: packet type name to
         function dictionary (GET requests)
         """
         self.gname = gname
