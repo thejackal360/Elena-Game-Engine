@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-from setuptools import setup
+import setuptools
 
 if __name__ == "__main__":
-    setup()
+    setuptools.setup()

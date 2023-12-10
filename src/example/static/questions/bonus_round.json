@@ -1,0 +1,14 @@
+[
+    {"property" : "melting",
+     "materials" : {"names" : ["cesium", "gallium", "rubidium"],
+                    "temperatures" : [28.5, 29.8, 39.3]}
+    },
+    {"property" : "boiling",
+     "materials" : {"names" : ["acetaldehyde", "ethyl bromide", "dichloromethane"],
+                    "temperatures" : [20.2, 38.4, 39.6]}
+    },
+    {"property" : "boiling",
+     "materials" : {"names" : ["pentene", "diethyl ether", "pentane"],
+                    "temperatures" : [30.0, 34.6, 36.1]}
+    }
+]
