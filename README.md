@@ -128,7 +128,7 @@ All trivia questions are json files mapping questions to answers. Please see sta
 
 ## Mini-Games
 
-Mini-games are interactive game modules within the trivia loop. Users pay points to play mini-games at random points throughout the trivia session. Mini-games are implemented as JavaScript functions that take a single argument, the user's response. Here is an example from the example application provided:
+Mini-games are interactive game modules within the trivia loop. Users pay points to play mini-games at random points throughout the trivia session. This enables elena-based trivia games to support more complex behavior to keep users engaged. Mini-games are implemented as JavaScript functions that take a single argument, the user's response. Here is an example from the example application provided:
 
 ```JavaScript
 /**
