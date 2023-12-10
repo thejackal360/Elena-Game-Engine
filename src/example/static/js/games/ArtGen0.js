@@ -16,8 +16,8 @@ var wantsart = false;
 function ArtGen0(val) {
     if (!wantsart) {
         if (!asked) {
-            chelsea_msgs.push("Pay " + kiwi_cost_to_play_game.toString() +
-                      " kiwis to see a trick? " +
+            chelsea_msgs.push("Pay " + point_cost_to_play_game.toString() +
+                      " to see a trick? " +
 		              "Please answer \"yes\" if you do.");
             asked = true;
         } else {
