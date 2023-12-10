@@ -17,7 +17,14 @@ function Experiment0(val) {
         handle_bonus = function(h) {
             bonus_content = h;
             chelsea_msgs.push("Bonus round!");
-            chelsea_msgs.push("Here are the " + h["property"] + " points of different substances...");
+            chelsea_msgs.push("I'm going to present you with the " + h["property"] + " points of 3 substances.");
+            chelsea_msgs.push("Guess one temperature, and I'll tell you whether the substance starts " +
+                               h["property"] + "...");
+            chelsea_msgs.push("You'll then need to guess which substance I selected based on that information.");
+            chelsea_msgs.push("Note that you only get to guess one temperature.");
+            chelsea_msgs.push("So, at best, you'll be able to narrow down the number of possible substances to 2.");
+            chelsea_msgs.push("You'll have to guess at that point and hope you're right.");
+            chelsea_msgs.push("Let's begin!")
             bonus_txt = "";
             for (let i = 0; i < h["materials"]["names"].length; i++) {
                 bonus_txt += h["materials"]["names"][i] + " (" +
@@ -25,8 +32,6 @@ function Experiment0(val) {
             }
             bonus_txt = bonus_txt.slice(0, -2);
             chelsea_msgs.push(bonus_txt);
-            chelsea_msgs.push("Guess one temperature, and I'll tell you whether the substance starts " +
-                               h["property"] + "...");
             bonus_idx = randint(3);
             youHold = false;
             given_temp = true;
@@ -34,18 +39,18 @@ function Experiment0(val) {
         send_http_get_request(handle_bonus,
             "application/json", "bonus");
     } else if (ready_for_substance_guess) {
-        let kiwi_inc = false;
+        let point_inc = false;
         if (scrub_str(val) == scrub_str(substance_name)) {
             chelsea_msgs.push("Correct!");
-            inc_kiwi_count(kiwi_cost_to_play_game);
-            kiwi_inc = true;
+            inc_point_count(point_cost_to_play_game);
+            point_inc = true;
         } else {
             chelsea_msgs.push("Wrong! It's " + substance_name + ".");
         }
         ready_for_substance_guess = false;
         given_temp = false;
         topic = Temperature_Controller_Part_II_randint_topics();
-        if (!kiwi_inc) {
+        if (!point_inc) {
             Temperature_Controller_Part_II_convo(val);
         }
     } else {
