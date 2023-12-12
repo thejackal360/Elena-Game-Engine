@@ -1,8 +1,9 @@
 torchaudio==2.1.1
-torch==2.1.0
-torchvision==0.16.0
+torch
+torchvision
+selenium
 
-matplotlib==3.3.8
+matplotlib
 flask==2.0.0
 werkzeug==2.2.2
 gunicorn==21.2.0
