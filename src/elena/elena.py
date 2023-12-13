@@ -249,15 +249,14 @@ class eFlask(Flask):
                 self.keys = list(qdict.keys())
                 self.n_questions = len(self.keys)
                 random.shuffle(self.keys)
-            # q = random.choice(list(qdict.keys()))
             if self.counter < self.n_questions:
                 q = self.keys[self.counter]
                 ans = qdict[q]
                 self.counter += 1
+                return jsonify({"question": q, "answer": ans})
             else:
                 self.counter = 0
-                msg = "You have made it! You answered all the questions!"
-                msg += "Now, I will take you back to the beginning!\n"
+                msg = "We completed all questions in the deck and are now starting from the beginning. "
 
                 self.keys = list(qdict.keys())
                 self.n_questions = len(self.keys)
@@ -266,7 +265,7 @@ class eFlask(Flask):
                 ans = qdict[q]
                 msg += q
                 self.counter += 1
-            return jsonify({"question": q, "answer": ans})
+                return jsonify({"question": msg, "answer": ans})
 
         elif request.headers.get("Internal-Type") in self.manual_ptype:
             with open(
