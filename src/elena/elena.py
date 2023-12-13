@@ -255,11 +255,17 @@ class eFlask(Flask):
                 ans = qdict[q]
                 self.counter += 1
             else:
-                q = "You have made it! You answered all the questions!"
-                q += "Now, I will take you back to the beginning!"
-                ans = ""
                 self.counter = 0
-                self.keys = []
+                msg = "You have made it! You answered all the questions!"
+                msg += "Now, I will take you back to the beginning!\n"
+
+                self.keys = list(qdict.keys())
+                self.n_questions = len(self.keys)
+                random.shuffle(self.keys)
+                q = self.keys[self.counter]
+                ans = qdict[q]
+                msg += q
+                self.counter += 1
             return jsonify({"question": q, "answer": ans})
 
         elif request.headers.get("Internal-Type") in self.manual_ptype:
