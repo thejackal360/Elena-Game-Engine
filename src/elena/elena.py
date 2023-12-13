@@ -137,6 +137,10 @@ class eFlask(Flask):
         self.gen_elena_top_js()
         self.gen_css()
 
+        self.counter = 0
+        self.n_questions = 0
+        self.keys = []
+
     def eroute(self, rule: str, **options: t.Any) -> t.Callable[[F], F]:
         # https://github.com/pallets/flask/blob/main/src/flask/scaffold.py#L36
         """Decorate a view function to register it with the given URL
@@ -241,8 +245,29 @@ class eFlask(Flask):
         """
         if request.headers.get("Internal-Type") in self.trivia_ptype:
             qdict = self.trivia_qs[request.headers.get("Internal-Type")]
-            q = random.choice(list(qdict.keys()))
-            return jsonify({"question": q, "answer": qdict[q]})
+            if self.counter == 0:
+                self.keys = list(qdict.keys())
+                self.n_questions = len(self.keys)
+                random.shuffle(self.keys)
+            # q = random.choice(list(qdict.keys()))
+            if self.counter < self.n_questions:
+                q = self.keys[self.counter]
+                ans = qdict[q]
+                self.counter += 1
+            else:
+                self.counter = 0
+                msg = "You have made it! You answered all the questions!"
+                msg += "Now, I will take you back to the beginning!\n"
+
+                self.keys = list(qdict.keys())
+                self.n_questions = len(self.keys)
+                random.shuffle(self.keys)
+                q = self.keys[self.counter]
+                ans = qdict[q]
+                msg += q
+                self.counter += 1
+            return jsonify({"question": q, "answer": ans})
+
         elif request.headers.get("Internal-Type") in self.manual_ptype:
             with open(
                 Path("static/html/")
