@@ -139,7 +139,6 @@ class eFlask(Flask):
 
         self.counter = 0
         self.n_questions = 0
-        self.begin = True
         self.keys = []
 
     def eroute(self, rule: str, **options: t.Any) -> t.Callable[[F], F]:
@@ -246,19 +245,21 @@ class eFlask(Flask):
         """
         if request.headers.get("Internal-Type") in self.trivia_ptype:
             qdict = self.trivia_qs[request.headers.get("Internal-Type")]
-            if self.begin:
+            if self.counter == 0:
                 self.keys = list(qdict.keys())
-                random.shuffle(self.keys)
-                self.begin = False
                 self.n_questions = len(self.keys)
+                random.shuffle(self.keys)
             # q = random.choice(list(qdict.keys()))
             if self.counter < self.n_questions:
                 q = self.keys[self.counter]
                 ans = qdict[q]
                 self.counter += 1
             else:
-                q = "Exhausted questions pool! (answer: exit)"
-                ans = "exit"
+                q = "You have made it! You answered all the questions!"
+                q += "Now, I will take you back to the beginning!"
+                ans = ""
+                self.counter = 0
+                self.keys = []
             return jsonify({"question": q, "answer": ans})
 
         elif request.headers.get("Internal-Type") in self.manual_ptype:
