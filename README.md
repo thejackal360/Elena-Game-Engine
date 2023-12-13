@@ -38,6 +38,9 @@ and then run the example
 $ ./app.py --local
 ```
 
+An automated test of basic user interface functionality is provided. Please
+run test.py in the src/example/ directory after installation.
+
 
 ```Python
 # Object Definitions
