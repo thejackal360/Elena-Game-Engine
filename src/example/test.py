@@ -5,10 +5,6 @@ import subprocess
 import time
 
 
-def start_web_server():
-    subprocess.run(["python3.10", "app.py", "--local"])
-
-
 def run_playwright_test():
 
     # Step 3: Launch a browser and open a new page
@@ -59,19 +55,17 @@ if __name__ == "__main__":
 
     # Step 1: Start the web server in a separate process
     print("Step 1: Starting web server...")
-    web_server_process = multiprocessing.Process(target=start_web_server)
-    web_server_process.start()
+    web_server_process = subprocess.Popen(["python3.10", "app.py", "--local"])
 
     # Step 2: Wait for the server to start (adjust sleep time as needed)
     print("Step 2: Waiting for the server to start...")
     time.sleep(5)
 
-    try:
-        # Run the Playwright test in the main process
-        run_playwright_test()
-    finally:
-        # Step 10: Stop the web server process when the test is done
-        print("Step 10: Stopping web server process...")
-        web_server_process.terminate()
-        web_server_process.join()
-        print("Test complete.")
+    # Run the Playwright test in the main process
+    run_playwright_test()
+
+    # Step 10: Stop the web server process when the test is done
+    print("Step 10: Stopping web server process...")
+    web_server_process.terminate()
+    web_server_process.wait()
+    print("Test complete.")
