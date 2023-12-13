@@ -17,7 +17,7 @@ description = "elena Trivia Webapp Generator"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    'matplotlib==3.8.1',
+    'matplotlib==3.5.1',
     'flask==2.0.0',
     'gunicorn==21.2.0'
 ]

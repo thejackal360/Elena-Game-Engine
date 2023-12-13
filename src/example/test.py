@@ -10,13 +10,6 @@ def start_web_server():
 
 
 def run_playwright_test():
-    # Step 1: Start the web server
-    print("Step 1: Starting web server...")
-    start_web_server()
-
-    # Step 2: Wait for the server to start (adjust sleep time as needed)
-    print("Step 2: Waiting for the server to start...")
-    time.sleep(5)
 
     # Step 3: Launch a browser and open a new page
     print("Step 3: Launching browser and opening a new page...")
@@ -64,9 +57,14 @@ def run_playwright_test():
 if __name__ == "__main__":
     import multiprocessing
 
-    # Start the web server in a separate process
+    # Step 1: Start the web server in a separate process
+    print("Step 1: Starting web server...")
     web_server_process = multiprocessing.Process(target=start_web_server)
     web_server_process.start()
+
+    # Step 2: Wait for the server to start (adjust sleep time as needed)
+    print("Step 2: Waiting for the server to start...")
+    time.sleep(5)
 
     try:
         # Run the Playwright test in the main process
