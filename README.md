@@ -111,13 +111,24 @@ is accessing it.
 
 ## Install/Project Configuration
 
-To create a new Elena-based project, first install the Elena library and its dependencies from the cloned git repo's root:
+You can install Elena through pip
+```bash
+$ pip install elena-game-engine==0.0.1
 ```
-$ python3 -m pip install -r requirements.txt --user
-$ python3 -m pip install . --user
+or you can clone this repository and then manually install it by
+executing the following commands
+```bash
+$ git clone https://github.com/thejackal360/Elena-Game-Engine.git
+$ cd Elena-Game-Gngine
+$ pip install .
 ```
 
-Then create a new directory elsewhere for your new Elena-based project. Copy over the following files/directories:
+To create a new Elena-based project, install the Elena library as described
+above and then run the `elena_create_project.py`.
+
+You can do the same manually instead of using the automated tool. 
+Create a new directory elsewhere for your new Elena-based project. Copy over
+the following files/directories:
 - elena/static/ and elena/templates/ to static/ and templates/ in the new directory
 
 If you plan on deploying on Heroku, these additional files should also be copied:
@@ -125,7 +136,9 @@ If you plan on deploying on Heroku, these additional files should also be copied
 - runtime.txt: used to set Python version for Heroku
 - wsgi.py: top-level server file for Heroku
 
-Be sure to write an app.py file as well using the one in this README as an example.
+Be sure to write an app.py file as well using the one in `src/example/app.py
+as an example. And do not forget to install all the requirements your application
+might need. 
 
 All lab manuals should be HTML files (excluding <body> and <html> tags). Those will go in static/html/. The naming convention is (module name)_lab_manual.html.
 Replace the spaces in (module name) with underscores. Please see static/html/ for examples.
