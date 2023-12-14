@@ -8,4 +8,4 @@ flask==2.0.0
 werkzeug==2.2.2
 gunicorn==21.2.0
 
-elena-game-engine==0.0.1
+elena-game-engine==0.0.2
