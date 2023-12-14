@@ -12,14 +12,17 @@ The following are the HTML/JS dependencies, included in the provided source code
   
 The following are the Python dependencies, included in `pyproject.toml` and in
 `requirements.txt` (used only for running the example):
-  - torch==1.10.0+cpu
-  - torchvision==0.11.1+cpu
-  - torchaudio==0.10.0+cpu 
+  - torch==2.1.0
+  - torchvision==0.16.0
+  - torchaudio==2.1.0 
+  - setuptools_scm >= 2.0.0
   - setuptools >= 40.0.4
   - wheel >= 0.29.0
-  - matplotlib==3.8.1'
+  - matplotlib==3.5.1'
   - flask==2.0.0
   - gunicorn==21.2.0
+  - playwright==1.40.0
+  - werkzeug==2.2.2
 
 ## Usage
 
